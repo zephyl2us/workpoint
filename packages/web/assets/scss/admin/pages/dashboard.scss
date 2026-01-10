@@ -1,0 +1,30 @@
+.card-bank-transfer {
+  #bankTransferChart {
+    min-height: 255px;
+  
+    .apexcharts-series {
+      &[seriesName='Deposit'] {
+        transform: scaleY(0.965);
+  
+        path {
+          clip-path: inset(0% 0% -50% 0% round 8px);
+        }
+      }
+      &[seriesName='Withdraw'] {
+        transform: scaleY(1.035);
+  
+        path {
+          clip-path: inset(-50% 0% 0% 0% round 8px);
+        }
+      }
+    }
+  }
+}
+
+.card-bank-balance {
+  max-height: 351px;
+
+  @include media-breakpoint-only(xs) {
+    max-height: 100%;
+  }
+}

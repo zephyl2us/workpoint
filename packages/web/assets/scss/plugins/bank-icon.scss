@@ -1,0 +1,121 @@
+$bank-path: "~/static/assets/banks" !default;
+$bank-size:     $input-btn-line-height + calc($input-btn-padding-y * 2);
+$bank-size-sm:  $input-btn-line-height-sm + calc($input-btn-padding-y-sm * 2);
+$bank-size-lg:  $input-btn-line-height-lg + calc($input-btn-padding-y-lg * 2);
+$bank-size-1:   1rem;
+$bank-size-2:   2rem;
+$bank-size-3:   3rem;
+$bank-size-4:   4rem;
+$bank-size-5:   5rem;
+$bank-size-6:  6rem;
+
+$bank-sizes: () !default;
+$bank-sizes: map-merge(
+  (
+    "sm": $bank-size-sm,
+    "lg": $bank-size-lg,
+    "1": $bank-size-1,
+    "2": $bank-size-2,
+    "3": $bank-size-3,
+    "4": $bank-size-4,
+    "5": $bank-size-5,
+    "6": $bank-size-6,
+  ),
+  $bank-sizes
+);
+
+$bank-colors: () !default;
+$bank-colors: map-merge(
+  (
+    "bbl":    #1e4598,
+    "kbank":  #138f2d,
+    "rbs":    #032952,
+    "ktb":    #1ba5e1,
+    "jpm":    #321c10,
+    "mufg":   #d61323,
+    "tmb":    #1279be,
+    "scb":    #4e2e7f,
+    "citi":   #1583c7,
+    "smbc":   #a0d235,
+    "sc":     #0f6ea1,
+    "cimb":   #7e2f36,
+    "uob":    #0b3979,
+    "bay":    #fec43b,
+    "mega":   #815e3b,
+    "boa":    #e11e3c,
+    "cacib":  #0e765b,
+    "gsb":    #eb198d,
+    "hsbc":   #fd0d1b,
+    "db":     #0522a5,
+    "ghb":    #f57d23,
+    "baac":   #4b9b1d,
+    "mb":     #150b78,
+    "bnp":    #14925e,
+    "tbank":  #fc4f1f,
+    "ibank":  #184615,
+    "tisco":  #12549f,
+    "kk":     #199cc5,
+    "icbc":   #c50f1c,
+    "tcrb":   #0a4ab3,
+    "lhb":    #6d6e71,
+    "ttb":    #ecf0f1,
+    "tmn":    #ecf0f1,
+    "pp":     #00427a,
+    "truemoney":#ff000f,
+  ),
+  $bank-colors
+);
+
+.bank {
+  position: relative;
+  display: inline-block;
+  background-color: $gray-100;
+  background-size: 75%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-origin: content-box;
+  width: $bank-size;
+  height: $bank-size;
+  padding: 0 calc($bank-size * .01) calc($bank-size * .01) 0;
+  border-radius: $border-radius;
+  overflow:hidden;
+
+  @each $size, $value in $bank-sizes {
+    &.bank-#{$size} {
+      width: $value;
+      height: $value;
+      padding: 0 calc($value * .01) calc($value * .01) 0;
+      border-radius: calc($value * .1);
+    }
+  }
+
+  @each $color, $value in $bank-colors {
+    &.bank-#{$color} {
+      background-color: rgba($value, 1);
+      background-image: url('#{$bank-path}/#{$color}.svg');
+
+      &:hover {
+      }
+    }
+
+    &.bank-light-#{$color} {
+      background-color: rgba($value, .12);
+      background-image: url('#{$bank-path}/#{$color}.svg');
+      color: $value;
+
+      &:hover {
+      }
+    }
+  }
+}
+
+
+@each $color, $value in $bank-colors {
+  .bank-#{$color}-bg {
+    background-color: rgba($value, .12);
+
+    .bank {
+      background-color: transparent;
+    }
+  }
+}

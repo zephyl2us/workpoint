@@ -1,0 +1,17 @@
+.modal {
+  .modal-header {
+    .btn-close {
+      background: $gray-100;
+      color: $body-color;
+      line-height: calc($h5-font-size * $line-height-base);
+      padding: 0 calc($spacer / 2);
+      border: none;
+      border-radius: $border-radius-sm;
+      transition: $btn-transition;
+       
+      &:hover {
+        background: $gray-200;
+      }
+    }
+  }
+}

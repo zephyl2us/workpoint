@@ -1,0 +1,411 @@
+$idcard-black-color: #000000;
+$idcard-blue-color: #223562;
+
+.card-ant-list {
+  .social-password {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    &.active {
+      // &::after {
+      //   content: '';
+      //   position: absolute;
+      //   background: $success;
+      //   width: 7px;
+      //   height: 7px;
+      //   bottom: -7px;
+      //   left: calc(50% - 3px);
+      //   border-radius: 50%;
+      // }
+    }
+
+    &.inactive {
+      &::after {
+        content: '';
+        position: absolute;
+        background: $danger;
+        width: 2px;
+        height: 14px;
+        border-radius: 2px;
+        transform: rotate(45deg);
+        opacity: .75;
+      }
+    }
+    // .check {
+    //   position: absolute;
+    //   color: $success;
+    //   font-size: 60%;
+    //   bottom: -3px;
+    //   right: 3px;
+    // }
+  }
+}
+
+.ant__idcard-modal {
+  .idcard-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 700px;
+    border: 1px solid $border-color;
+    overflow: hidden;
+  }
+
+  .idcard-image {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .idcard-card {
+    position: relative;
+    background-image: url('/assets/idcard/idcard-bg.png');
+    background-size: 100%;
+    font-family: 'DilleniaUPC';
+    font-weight: 400;
+    color: rgba($idcard-black-color, .75);
+    text-shadow: 0px 0px 1px rgba($idcard-black-color, .5);
+    width: 720px;
+    min-width: 720px;
+    height: 452px;
+    border-radius: 24px;
+    overflow: hidden;
+    user-select: none;
+    border: 1px solid rgba($black, .1);
+    border-bottom-width: 2px;
+
+    .is-saving {
+      .cursor-pointer {
+        z-index: 1;
+      }
+    }
+
+    &:not(.is-saving) {
+      .cursor-pointer {
+        z-index: 3;
+      }
+    }
+
+    .text-blue {
+      color: $idcard-blue-color;
+      text-shadow: 0px 0px 1px rgba($idcard-blue-color, .5);
+    }
+
+    > div {
+      position: absolute;
+    }
+
+    .national-id {
+      font-size: 44px;
+      letter-spacing: .9px;
+      top: 7.3%;
+      left: 45.5%;
+    }
+
+    .name-th {
+      font-size: 48px;
+      letter-spacing: 1.2px;
+      top: 18%;
+      left: 30%;
+    }
+
+    .name-en {
+      font-size: 38px;
+      letter-spacing: 1px;
+      top: 27%;
+      left: 41%;
+    }
+
+    .lastname-en {
+      font-size: 38px;
+      letter-spacing: 1px;
+      top: 34.5%;
+      left: 46.8%;
+    }
+
+    .birthday-th {
+      font-size: 40px;
+      letter-spacing: 0px;
+      top: 41.5%;
+      left: 45.2%;
+    }
+
+    .birthday-en {
+      font-size: 37px;
+      letter-spacing: 1px;
+      top: 49.4%;
+      left: 51%;
+    }
+
+    .issue-th {
+      font-size: 29px;
+      letter-spacing: .2px;
+      top: 77.2%;
+      left: 11.7%;
+      z-index: 3;
+    }
+
+    .issue-en {
+      font-size: 26px;
+      letter-spacing: 1px;
+      top: 87%;
+      left: 11.7%;
+    }
+
+    .expiry-th {
+      font-size: 29px;
+      letter-spacing: 0px;
+      top: 77%;
+      left: 56.5%;
+      // z-index: 3;
+    }
+
+    .expiry-en {
+      font-size: 26px;
+      letter-spacing: 1px;
+      top: 87%;
+      left: 56.5%;
+    }
+
+    .address {
+      position: relative;
+      font-size: 35px;
+      letter-spacing: .15px;
+      line-height: .9;
+      width: 62%;
+      top: 66.2%;
+      left: 11.7%;
+
+      &::before {
+        content: '';
+        display: inline-block;
+        width: 9%;
+      }
+    }
+
+    .officer {
+      width: 24%;
+      font-size: 25px;
+      letter-spacing: 0px;
+      top: 87.3%;
+      left: 40.6%;
+      text-align: center;
+      margin-left: -12%;
+      // z-index: 3;
+    }
+
+    .signature {
+      position: relative;
+      // background: rgba($black, .5);
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 24%;
+      height: 11.5%;
+      top: 64%;
+      left: 40.6%;
+      text-align: center;
+      margin-left: -12%;
+      // z-index: 3;
+
+      img {
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+      }
+    }
+
+    .card-no {
+      font-size: 28px;
+      letter-spacing: .2px;
+      line-height: .9;
+      top: 91.5%;
+      left: 74.9%;
+    }
+
+    .religion {
+      font-size: 26px;
+      letter-spacing: 1px;
+      top: 57.7%;
+      left: 43.7%;
+    }
+
+    .barcode {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      // background: $red;
+      width: 4.6%;
+      height: 70.5%;
+      top: 26.7%;
+      left: 3.9%;
+      // overflow: hidden;
+      
+      > img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+  }
+
+  .idcard-profile {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba($white, .25);
+    background-image: url('/assets/idcard/idcard-measure.png');
+    background-size: 100%;
+    background-position-x: center;
+    width: 22%;
+    height: 43%;
+    top: 47.9%;
+    left: 74.8%;
+    overflow: hidden;
+    z-index: 1;
+
+    .profile-grid {
+      &::before {
+        position: absolute;
+        background: $red;
+        width: 100%;
+        height: 2px;
+        top: 10%;
+        left: 0;
+      }
+      &::after {
+        position: absolute;
+        background: $red;
+        width: 100%;
+        height: 2px;
+        bottom: 15%;
+        left: 0;
+      }
+
+      &.active {
+        &::before, &::after {
+          content: '';
+        }
+      }
+    }
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .idcard-backdrop {
+    position: absolute;
+    width: 120%;
+  }
+
+  .idcard-default {
+    background-image: url('/assets/idcard/idcard-default.png');
+    background-size: 100%;
+    width: 100%;
+    height: 100%;
+    opacity: .25;
+  }
+
+  .idcard-line {
+    position: absolute;
+    background-image: url('/assets/idcard/idcard-line.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    width: 90.6%;
+    height: 18%;
+    bottom: 0;
+    right: 0;
+    z-index: 2;
+  }
+
+  .idcard-filter {
+    position: absolute;
+    // background-image: url('/assets/idcard/idcard-filter-05.png');
+    background-size: 200%;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+  }
+}
+
+.ant__form-range {
+  .col-form-label {
+
+  }
+
+  > div {
+    display: flex;
+    align-items: center;
+  }
+
+  .custom-range {
+    margin: auto 0;
+  }
+}
+
+.ant__bot {
+  position: absolute;
+  display: flex;
+  align-items: stretch;
+  background: $white;
+  width: 100%;
+  height: 100%;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+
+  .left-content {
+    min-width: 300px;
+    border-right: 1px solid $border-color;
+  }
+
+  .right-content {
+    flex: 1;
+  }
+
+  .bot-list {
+
+    .bot-item {
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      padding: calc($spacer / 2);
+      border-top: 1px solid $border-color;
+
+      &:hover {
+        background: rgba($gray-100, .5);
+      }
+
+      &.active {
+        background: $gray-100;
+      }
+    }
+  }
+
+  .activity-list {
+    // padding: $spacer;
+
+    .activity-item {
+      display: flex;
+      // flex-direction: row;
+      padding: calc($spacer / 4) calc($spacer / 2);
+      border-bottom: 1px dashed $gray-100;
+
+      &:hover {
+        background: rgba($gray-100, .5);
+      }
+
+    }
+  }
+}

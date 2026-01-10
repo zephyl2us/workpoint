@@ -1,0 +1,266 @@
+$curtain-transition: 5s ease-in-out 0.1s;
+
+// html, body {
+// 	// width: 100%;
+// 	// height: calc(100% + env(safe-area-inset-top) + env(safe-area-inset-bottom));
+// 	// height: 100%;
+//   -webkit-overflow-scrolling: touch;
+// }
+
+// body {
+//   max-height: 100vh;
+//   overflow: hidden;
+// }
+
+.katei__wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: #813331;
+  background-image: url('/assets/katei/outing2024/bg.png');
+  background-position: center;
+  background-size: cover;
+  font-family: 'Kanit';
+  width: 100%;
+  height: calc(100vw / 3.55);
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    background-image: url('/assets/katei/outing2024/light-effect.png');
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.katei__curtain {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  top: 0;
+  z-index: 9999;
+
+  &.katei__curtain-left {
+    background-image: url('/assets/katei/outing2024/curtain-left.jpg');
+    background-position: top right;
+    background-size: auto 100%;
+    background-repeat: repeat-x;
+    right: 50%;
+    box-shadow: 0.5vw 0px 1vw 0px rgba(0,0,0,.75);
+    transition: right $curtain-transition;
+
+    &.open {
+      right: calc(50% + 25vw);
+    }
+  }
+  &.katei__curtain-right {
+    background-image: url('/assets/katei/outing2024/curtain-right.jpg');
+    background-position: top left;
+    background-size: auto 100%;
+    background-repeat: repeat-x;
+    left: 50%;
+    box-shadow: -0.5vw 0px 1vw 0px rgba(0,0,0,.75);
+    transition: left $curtain-transition;
+
+    &.open {
+      left: calc(50% + 25vw);
+    }
+  }
+}
+
+.katei__logo {
+  position: absolute;
+  background-image: url('/assets/katei/outing2024/logo.png');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 12%;
+  height: 18%;
+  top: 0%;
+  opacity: 0.5;
+  z-index: 9998;
+}
+
+.katei__reward {
+  position: absolute;
+  // background: rgba(255,255,255,0.2);
+  width: 14vw;
+  height: 14vw;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+
+  &.katei__reward-left, &.katei__reward-right {
+    top: 14%;
+    transform: scale(0.9) translateX(-50%);
+    z-index: 1;
+  }
+
+  &.katei__reward-left {
+    left: 34.5%;
+
+    .katei__reward-podium-2 {
+      background-image: url('/assets/katei/outing2024/podium-2b.png') !important;
+    }
+  }
+
+  &.katei__reward-right {
+    left: 64%;
+  
+    .katei__reward-podium-3 {
+      background-image: url('/assets/katei/outing2024/podium-3b.png') !important;
+    }
+  }
+}
+
+.katei__reward-star {
+  display: none;
+  position: absolute;
+  // background: rgba(255, 255, 255, 0.2);
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transform: translateX(-50%);
+
+  &.star-rotate {
+    display: block;
+    animation: starRotate 20s linear infinite;
+  }
+
+  &.katei__reward-star-1 {
+    background-image: url('/assets/katei/outing2024/star-1.png');
+  }
+
+  &.katei__reward-star-2 {
+    background-image: url('/assets/katei/outing2024/star-2.png');
+  }
+
+  &.katei__reward-star-3 {
+    background-image: url('/assets/katei/outing2024/star-3.png');
+  }
+}
+
+.katei__reward-icon {
+  position: absolute;
+  // background: rgba(0,0,0,0.2);
+  background-position: center;
+  background-size: 50%;
+  background-repeat: no-repeat;
+  width: 80%;
+  height: 80%;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  &.katei__reward-icon-1 {
+    background-image: url('/assets/katei/outing2024/reward-1.png');
+    background-size: 90%;
+  }
+
+  &.katei__reward-icon-2 {
+    background-image: url('/assets/katei/outing2024/reward-2.png');
+  }
+
+  &.katei__reward-icon-3 {
+    background-image: url('/assets/katei/outing2024/reward-3.png');
+  }
+}
+
+.katei__reward-label {
+  position: absolute;
+  display: inline-block;
+  bottom: 0;
+  font-size: 1vw;
+  color: rgba(255,255,255,.75);
+  width: 100%;
+  left: 50%;
+  text-align: center;
+  transform: translateX(-50%);
+
+  .katei__reward-text-1 {
+    color: #ddaf4f;
+  }
+
+  .katei__reward-text-2 {
+    color: #6e7484;
+  }
+
+  .katei__reward-text-3 {
+    color: #b87639;
+  }
+}
+
+.katei__reward-podium {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  font-size: 1.5vw;
+  color: rgba(255,255,255, .75);
+  width: 120%;
+  height: 33%;
+  bottom: -35%;
+  left: 50%;
+  padding-top: 5%;
+  text-align: center;
+  transform: translateX(-50%);
+
+  &.katei__reward-podium-1 {
+    background-image: url('/assets/katei/outing2024/podium-1.png');
+  }
+
+  &.katei__reward-podium-2 {
+    background-image: url('/assets/katei/outing2024/podium-2.png');
+  }
+
+  &.katei__reward-podium-3 {
+    background-image: url('/assets/katei/outing2024/podium-3.png');
+  }
+}
+
+.katei__number-list {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  width: 30vw;
+  height: 3vw;
+  top: 65%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  .katei__number-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    font-family: 'Lato';
+    font-size: 1.5vw;
+    font-weight: bolder;
+    color: #74191a;
+    width: 10%;
+    height: 100%;
+    border: 0.25vw solid #a88048;
+    border-radius: 50%;
+  }
+
+  .katei__number-icon {
+    max-width: 60%;
+  }
+}
+
+@keyframes starRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

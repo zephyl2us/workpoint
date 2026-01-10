@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
+  <script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>
+  
+</head>
+<body>
+  <video
+    id="my-video"
+    class="video-js vjs-default-skin"
+    controls
+    preload="auto"
+    width="640"
+    height="360"
+    data-setup='{
+      "fluid": false,
+      "mute": false
+    }'>
+    <source src="https://65fff4186fb76.streamlock.net/vod/s/0a24dc7fed820c7a32e6ade66402ffd9-hd/smil:playlist.smil/playlist.m3u8?tokenhash=sHuQNV-BvkIBXptrRlvm4t3Ci0vmKcrSZsAGnPFuYfs=&tokenendtime=1711392852" type="application/x-mpegURL">
+  </video>
+</body>
+</html>
+
+<script>
+  document.addEventListener('DOMContentLoaded', async function() {
+    var player = videojs('my-video');
+    var audioTrackList = player.audioTracks();
+
+    console.log(audioTrackList)
+    // Log the currently enabled AudioTrack label.
+    for (var i = 0; i < audioTrackList.length; i++) {
+      var track = audioTrackList[i];
+
+      console.log(track)
+    }
+  });
+</script>

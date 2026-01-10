@@ -1,0 +1,114 @@
+.table-responsive {
+  margin-bottom: 0;
+
+  th, td {
+    white-space: nowrap;
+  }
+}
+
+.table {
+  tr {
+    &.disabled {
+      background: $gray-50;
+    }
+  }
+
+  th {
+    font-family: $font-family-special;
+  }
+
+  td {
+    // display: flex;
+    // align-items: center;
+    vertical-align: middle;
+  }
+
+  &.border-top-0 {
+    th {
+      border-top: none;
+    }
+  }
+}
+
+.table-sm {
+  th {
+    font-size: $font-size-sm;
+  }
+}
+
+.table-action {
+  display: flex;
+}
+
+.table-config {
+  > td {
+    background: $light;
+    border-top: 0;
+    padding-top: 0;
+
+    .config-body {
+      flex: 1;
+      background: $white;
+      border-radius: $border-radius;
+      overflow: inherit !important;
+
+      .vb-content {
+        overflow: inherit !important;
+      }
+    }
+
+    .config-header {
+      display: flex;
+      padding: $spacer;
+    }
+    .config-footer {
+      display: none;
+      padding: calc($spacer / 2) $spacer;
+    }
+  }
+
+
+  @include media-breakpoint-only(xs) {
+    position: fixed;
+    background: $white;
+    top: $app-topbar-height;
+    right: 0;
+    width: 100vw;
+    // max-width: 400px;
+    height: calc(100vh - $app-topbar-height);
+    box-shadow: $box-shadow;
+    z-index: $zindex-sticky - 1;
+    transition: right .25s;
+
+    &.opening {
+      right: -100%;
+    }
+  
+    > td {
+      display: flex;
+      flex-direction: column;
+      background: $white !important;
+      height: 100%;
+      padding: 0;
+      padding-bottom: calc($spacer / 2);
+
+      .config-body {
+        overflow: hidden !important;
+  
+        .vb-content {
+          overflow: hidden scroll !important;
+        }
+      }
+
+      .config-footer {
+        display: flex;
+      }
+    }
+  }
+}
+body.config-fixed {
+  @include media-breakpoint-only(xs) {
+    max-height: 100vh;
+    overflow: hidden;
+  }
+}

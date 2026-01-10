@@ -1,0 +1,16 @@
+@import './var.scss';
+
+.#{$namespace}-zoom-in-down-enter-active,
+.#{$namespace}-zoom-in-down-leave-active {
+  opacity: 1;
+  transform: scaleY(1);
+  transition: $transition-fade;
+  transform-origin: center top;
+}
+
+.#{$namespace}-zoom-in-down-enter,
+.#{$namespace}-zoom-in-down-enter-from,
+.#{$namespace}-zoom-in-down-leave-to {
+  opacity: 0;
+  transform: scaleY(0);
+}

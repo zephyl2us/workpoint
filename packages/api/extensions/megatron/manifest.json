@@ -1,0 +1,69 @@
+{
+  "manifest_version": 3,
+  "name": "Megatron",
+  "description": "Description",
+  "version": "1.0.0",
+  "icons": {
+    "256": "icons/megatron.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Popup"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://127.0.0.1:20725/*",
+        "https://start.adspower.net/*"
+      ],
+      "js": [
+        "plugins/axios.min.js", 
+        "plugins/jquery-3.7.1.min.js",
+        "plugins/lodash.min.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.facebook.com/*",
+        "https://m.facebook.com/*"
+      ],
+      "js": [
+        "plugins/axios.min.js", 
+        "plugins/jquery-3.7.1.min.js", 
+        "plugins/jquery.cookie.js", 
+        "plugins/lodash.min.js", 
+        "global/web-behavior.js",
+        "contents/facebook.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://accounts.google.com/*",
+        "https://gds.google.com/*",
+        "https://myaccount.google.com/*"
+      ],
+      "js": [
+        "plugins/axios.min.js", 
+        "plugins/jquery-3.7.1.min.js", 
+        "plugins/jquery.cookie.js", 
+        "plugins/lodash.min.js", 
+        "plugins/moment.min.js", 
+        "contents/google.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "activeTab", 
+    "tabs", 
+    "cookies",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

@@ -1,0 +1,25 @@
+.auth {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.auth__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 520px;
+  min-height: 100vh;
+  margin: 0 auto;
+
+  .app__logo {
+    width: 64px;
+    height: 64px;
+    margin-bottom: $spacer * 2;
+  }
+}
+
+.auth__card {
+
+}

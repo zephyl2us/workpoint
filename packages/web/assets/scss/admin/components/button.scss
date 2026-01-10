@@ -1,0 +1,30 @@
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-navbar-toggle {
+  height: 100%;
+  // width: $input-btn-line-height-lg + calc($input-btn-padding-y-lg * 2);
+  // background: $black;
+  font-size: $font-size-base * 1.75;
+  padding: 0 $spacer;
+  // margin-right: $spacer;
+  margin-left: calc($spacer * -1);
+  border-radius: none;
+  // border-color: $border-color;
+}
+
+@each $color, $value in $theme-colors {
+  .btn-light-#{$color} {
+    background: rgba($value, .12);
+    color: $value;
+
+    &:hover {
+      background: rgba($value, .2);
+      color: darken($value, 5%);
+    }
+  }
+}
+

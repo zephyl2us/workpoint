@@ -1,0 +1,35 @@
+.card {
+  box-shadow: $box-shadow-sm;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  min-height: $btn-line-height-sm + calc($btn-padding-y-sm * 2) + calc($card-spacer-y * 2);
+}
+
+.card-dash {
+  color: $white;
+
+  h1, h2, h3, h4, h5, h6,
+  .h1, .h2, .h3, .h4, .h5, .h6 {
+    color: $white;
+  }
+
+  .text-muted {
+    color: rgba($white, .9) !important;
+  }
+}
+
+@each $color, $value in $theme-colors {
+  .card-dash-#{$color} {
+    background: linear-gradient(to right, $value, lighten($value, 15%));
+  }
+}
+
+.card-dash-warning {
+  background: linear-gradient(to right, $orange, $yellow);
+}
+.card-dash-info {
+  background: linear-gradient(to right, $dark-blue, $light-blue);
+}

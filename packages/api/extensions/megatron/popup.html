@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Megatron</title>
+    <link rel="stylesheet" href="./css/style.css">
+  </head>
+  <body id="bodyPopup" class="">
+    <div class="intro">
+      <img src="./icons/megatron.png">
+    </div>
+    <div class="popup hidden">
+      <div class="header">
+        <h1 id="userName" class=""></h1>
+        <span id="userEmail"></span>
+      </div>
+      <ul id="navigation" class="nav-list">
+        <li for="navDetail" class="list-item active">ข้อมูล</li>
+        <li for="navGoogle" class="list-item">Google</li>
+        <li for="navFacebook" class="list-item">Facebook</li>
+      </ul>
+      <div id="navDetail" class="content active">
+        <ul class="detail-list">
+          <li class="list-item">
+            <div class="label">ชื่อ-นามสกุล</div>
+            <div id="userNameTh" class="value"></div>
+          </li>
+          <li class="list-item">
+            <div class="label">เพศ</div>
+            <div id="userGender" class="value"></div>
+          </li>
+          <li class="list-item">
+            <div class="label">วันเกิด</div>
+            <div id="userBirthday" class="value"></div>
+          </li>
+          <li class="list-item">
+            <div class="label">ที่อยู่</div>
+            <div id="userAddress" class="value"></div>
+          </li>
+        </ul>
+
+        <button id="gmailSetupUser" class="">Google Setup</button>
+        <button id="gmailLogin" class="">Google Login</button>
+
+        <div id="botStep" class=""></div>
+      </div>
+      <div id="navGoogle" class="content ">
+        <div style="text-align: center;">รหัสผ่าน</div>
+        <div id="googlePassword" class="box" style="font-weight: bolder;"></div>
+      </div>
+      <div id="navFacebook" class="content">
+        <div style="text-align: center;">รหัสผ่าน</div>
+        <div id="facebookPassword" class="box" style="font-weight: bolder;"></div>
+        <div>
+          <span>Auto bot</span>
+          <label class="switch">
+            <input type="checkbox" id="autoBot">
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <script src="./plugins/crypto-js.min.js"></script>
+    <script src="./plugins/jquery-3.7.1.min.js"></script>
+    <script src="./plugins/jquery.cookie.js"></script>
+    <script src="./plugins/lodash.min.js"></script>
+    <script src="./plugins/moment.min.js"></script>
+    <script src="./js/popup.js"></script>
+  </body>
+</html>

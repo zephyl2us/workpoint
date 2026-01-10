@@ -1,0 +1,16 @@
+
+.badge-warning {
+  color: $white;
+}
+
+@each $color, $value in $theme-colors {
+  .badge-light-#{$color} {
+    background: rgba($value, .12);
+    color: $value;
+
+    // &:hover {
+    //   background: rgba($value, .2);
+    //   color: darken($value, 5%);
+    // }
+  }
+}

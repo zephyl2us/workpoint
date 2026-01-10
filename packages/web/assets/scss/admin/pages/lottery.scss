@@ -1,0 +1,105 @@
+.card-lottery-yeekee {
+  .list-group {
+    .list-group-item {
+      display: flex;
+      justify-content: space-between;
+      border-color: $gray-100;
+    }
+
+    .list-group-title {
+      font-family: $font-family-special;
+      font-size: $font-size-sm;
+    }
+  }
+
+  .lottery-list {
+    &.is-updating {
+
+      .list-group-item {
+        &:first-child {
+          opacity: 0;
+          transition: none;
+        }
+      }
+    }
+
+    .list-group-item {
+      transition: $transition-fade;
+
+      &:first-child {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-bold;
+      }
+    }
+  }
+
+  .lottery-result {
+    display: flex;
+    width: 50%;
+    max-width: 150px;
+
+    .result-item {
+      flex-grow: 1;
+      text-align: center;
+    }
+  }
+}
+
+.card-lottery-forecast-filter {
+  .forecast-group {
+    
+  }
+  .forecast-group-item {
+    border-top: $border-width solid $border-color;
+
+    &.active {
+      .forecast-menu {
+        .menu-label {
+          color: $dark;
+        }
+      }
+      .forecast-submenu {
+        display: block;
+      }
+    }
+  }
+  .forecast-menu {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: $dark;
+    padding: calc($spacer / 4 * 3) $spacer;
+
+    &:hover {
+      color: $primary;
+      // background: $gray-50;
+    }
+
+    .menu-label {
+      font-family: $font-family-special;
+    }
+  }
+  .forecast-submenu {
+    display: none;
+    padding-bottom: calc($spacer / 2);
+    // margin-top: calc($spacer / 2 * -1);
+
+    .submenu-item {
+      cursor: pointer;
+      padding: calc($spacer / 4) $spacer;
+
+      &:hover {
+        color: $primary;
+        // background: $gray-50;
+      }
+
+      &.active {
+        .menu-label {
+          color: $primary;
+          font-weight: $font-weight-bold;
+        }
+      }
+    }
+  }
+}

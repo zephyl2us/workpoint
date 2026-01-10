@@ -1,0 +1,56 @@
+.movie__poster {
+  background-position: center;
+  background-size: cover;
+  width: 120px;
+  height: 180px;
+  border-radius: $border-radius-sm;
+  box-shadow: $box-shadow-sm;
+  transition: $transition-base;
+
+  &.movie__poster-sm {
+    width: 60px;
+    height: 90px;
+  }
+
+  &.movie__poster-lg {
+    width: 180px;
+    height: 270px;
+  }
+
+  &.movie__poster-xl {
+    width: 240px;
+    height: 360px;
+  }
+}
+
+.card-movie-list {
+  tr {
+    &:hover {
+      .movie__poster-sm {
+        box-shadow: 0 .125rem .5rem .125rem rgba($black, .25);
+      }
+    }
+  }
+}
+
+.movie__genre-list {
+  .list-item {
+    position: relative;
+    display: inline-block;
+    padding: 0 calc($spacer / 3);
+
+    + .list-item {
+      // border-left: 2px solid $border-color;
+      &::before {
+        content: "";
+        position: absolute;
+        display: block;
+        background: $border-color;
+        width: 2px;
+        height: 80%;
+        left: -1px;
+        top: 10%;
+      }
+    }
+  }
+}

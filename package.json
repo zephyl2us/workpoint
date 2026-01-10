@@ -1,0 +1,51 @@
+{
+  "name": "pm2-npm-helper",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "deploy:api": "pm2 deploy api",
+    "deploy:cron": "pm2 deploy cron",
+    "deploy:worker": "pm2 deploy worker-general && pm2 deploy worker-lottery && pm2 deploy worker-transaction",
+    "deploy:worker-transaction": "pm2 deploy worker-transaction",
+    "deploy:web": "pm2 deploy web",
+    "deploy:backend": "pm2 deploy api && pm2 deploy cron && pm2 deploy worker-general && pm2 deploy worker-lottery && pm2 deploy worker-transaction",
+    "deploy:all": "pm2 deploy api && pm2 deploy cron && pm2 deploy worker-general && pm2 deploy worker-lottery && pm2 deploy worker-transaction && pm2 deploy web",
+
+    "stop:api": "pm2 deploy api exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 stop all\"",
+    "stop:cron": "pm2 deploy cron exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 stop all\"",
+    "stop:worker": "pm2 deploy worker-general exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 stop all\" && pm2 deploy worker-lottery exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 stop all\" && pm2 deploy worker-transaction exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 stop all\"",
+    "stop:worker-transaction": "pm2 deploy worker-transaction exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 stop all\"",
+    "stop:web": "pm2 deploy web exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 stop all\"",
+    "stop:backend": "npm run stop:api && npm run stop:cron && npm run stop:worker",
+    "stop:all": "npm run stop:api && npm run stop:cron && npm run stop:worker && npm run stop:web",
+
+    "restart:api": "pm2 deploy api exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 restart all\"",
+    "restart:cron": "pm2 deploy cron exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 restart all\"",
+    "restart:worker": "pm2 deploy worker-general exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 restart all\" && pm2 deploy worker-lottery exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 restart all\" && pm2 deploy worker-transaction exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 restart all\"",
+    "restart:worker-transaction": "pm2 deploy worker-transaction exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 restart all\"",
+    "restart:web": "pm2 deploy web exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 restart all\"",
+    "restart:backend": "npm run restart:api && npm run restart:cron && npm run restart:worker && npm run restart:backend",
+    "restart:all": "npm run restart:api && npm run restart:cron && npm run restart:worker && npm run restart:web",
+
+    "deploy:staging-api": "pm2 deploy staging-api",
+    "deploy:staging-cron": "pm2 deploy staging-cron",
+    "deploy:staging-worker": "pm2 deploy staging-worker",
+    "deploy:staging-web": "pm2 deploy staging-web",
+    "deploy:staging-backend": "pm2 deploy staging-api && pm2 deploy staging-cron && pm2 deploy staging-worker",
+    "deploy:staging-all": "pm2 deploy staging-api && pm2 deploy staging-cron && pm2 deploy staging-worker && pm2 deploy staging-web",
+
+    "stop:staging-api": "pm2 deploy staging-api exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 stop all\"",
+    "stop:staging-cron": "pm2 deploy staging-cron exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 stop all\"",
+    "stop:staging-worker": "pm2 deploy staging-worker exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 stop all\"",
+    "stop:staging-web": "pm2 deploy staging-web exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 stop all\"",
+    "stop:staging-backend": "npm run stop:staging-api && npm run stop:staging-cron && npm run stop:staging-worker",
+    "stop:staging-all": "npm run stop:staging-api && npm run stop:staging-cron && npm run stop:staging-worker && npm run stop:staging-web",
+
+    "restart:staging-api": "pm2 deploy staging-api exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 restart all\"",
+    "restart:staging-cron": "pm2 deploy staging-cron exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 restart all\"",
+    "restart:staging-worker": "pm2 deploy staging-worker exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 restart all\"",
+    "restart:staging-web": "pm2 deploy staging-web exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 restart all\"",
+    "restart:staging-backend": "npm run restart:staging-api && npm run restart:staging-cron && npm run restart:staging-worker",
+    "restart:staging-all": "npm run restart:staging-api && npm run restart:staging-cron && npm run restart:staging-worker && npm run restart:staging-web"
+  }
+}

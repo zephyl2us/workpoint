@@ -1,0 +1,119 @@
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-clipboard {
+  cursor: pointer;
+
+  &:hover {
+    &::after {
+      content: "\f0c5";
+      font-family: $font-family-icon;
+      font-weight: 300;
+      margin-left: calc($spacer / 4);
+      opacity: .5;
+    }
+  }
+}
+
+.font-size-base {
+  font-size: $font-size-base;
+}
+.font-size-sm {
+  font-size: $font-size-sm;
+}
+.font-size-lg {
+  font-size: $font-size-lg;
+}
+
+
+.font-family-special {
+  font-family: $font-family-special;
+}
+.font-family-numeral {
+  font-family: $font-family-numeral;
+  font-weight: 400;
+}
+
+.clipboard {
+  cursor: pointer;
+
+  &:hover {
+    &::after {
+      opacity: 1;
+    }
+  }
+
+  &::after {
+    display: inline-block;
+    font-family: $font-family-icon;
+    font-weight: 400;
+    font-size: 80%;
+    color: $text-muted;
+    content: "\f0c5";
+    margin-left: 3px;
+    opacity: 0;
+    transition: .25s opacity;
+  }
+}
+
+// Social background and front color
+@each $color, $value in $social-colors {
+  .text-#{$color} {
+    color: $value;
+  }
+  .bg-#{$color} {
+    background: $value;
+  }
+  .bg-light-#{$color} {
+    background: rgba($value, .12);
+  }
+}
+
+// Opacity 0.1, 0.2 ~ 1
+@for $i from 1 through 10 {
+  .opacity-#{($i - 1) * 10} {
+    opacity: $i * .1
+  }
+}
+
+
+// Scroller
+.scroller-x {
+  position: relative;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+.scroller-y {
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  white-space: nowrap;
+}
+
+.scroll-xs-max {
+  @include media-breakpoint-only(xs) {
+    max-height: auto !important;
+  }
+}
+.scroll-sm-max {
+  @include media-breakpoint-only(sm) {
+    max-height: auto !important;
+  }
+}
+.scroll-md-max {
+  @include media-breakpoint-only(md) {
+    max-height: auto !important;
+  }
+}
+.scroll-lg-max {
+  @include media-breakpoint-only(lg) {
+    max-height: auto !important;
+  }
+}
+.scroll-xl-max {
+  @include media-breakpoint-only(sm) {
+    max-height: auto !important;
+  }
+}

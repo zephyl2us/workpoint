@@ -1,0 +1,15 @@
+.row {
+  &.row-match-height {
+    display: flex;
+    flex-wrap: wrap;
+
+    > [class*="col-"] {
+      display: flex;
+      flex-direction: column;
+
+      > .card {
+        flex: 1 1 auto;
+      }
+    }
+  }
+}

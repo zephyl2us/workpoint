@@ -1,0 +1,17 @@
+.form-row {
+  > [class*="col-"] {
+    display: flex;
+    align-items: center;
+    min-height: calc(($font-size-base * $line-height-base) + ($spacer * .5));
+  }
+}
+
+.form-control-datepicker {
+}
+
+.custom-file {
+  cursor: pointer;
+  > * {
+    cursor: pointer;
+  }
+}

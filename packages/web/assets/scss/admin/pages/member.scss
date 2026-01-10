@@ -1,0 +1,14 @@
+.card-member-revenue {
+  #affiliateRevenueChart {
+  
+    .apexcharts-series {
+      &[seriesName='Revenue'] {
+        // transform: scaleY(0.965);
+  
+        path {
+          clip-path: inset(0% 0% -50% 0% round 8px);
+        }
+      }
+    }
+  }
+}

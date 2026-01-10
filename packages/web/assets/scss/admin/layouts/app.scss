@@ -1,0 +1,44 @@
+html, body {
+	// width: 100%;
+	// height: calc(100% + env(safe-area-inset-top) + env(safe-area-inset-bottom));
+	// height: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  &.fixed {
+    max-height: 100vh;
+    overflow: hidden;
+  }
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  transition: .25s padding;
+
+  @include media-breakpoint-up(lg) {
+    padding-left: $app-navbar-width;
+  }
+}
+
+.app__logo {
+  fill: $primary;
+  width: 32px;
+  height: 32px;
+}
+
+.app__landing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vw;
+}
+
+.app-sticky-top {
+  position: sticky;
+  top: $app-topbar-height + 16px;
+}

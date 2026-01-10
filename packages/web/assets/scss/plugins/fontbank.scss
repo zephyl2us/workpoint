@@ -1,0 +1,281 @@
+
+$font-bank-path: "~/static/assets/webfonts/fontbank" !default;
+
+$bank-bbl:    #1e4598 !default;
+$bank-kbank:  #138f2d !default;
+$bank-rbs:    #032952 !default;
+$bank-ktb:    #1ba5e1 !default;
+$bank-jpm:    #321c10 !default;
+$bank-mufg:   #d61323 !default;
+$bank-tmb:    #1279be !default;
+$bank-scb:    #4e2e7f !default;
+$bank-citi:   #1583c7 !default;
+$bank-smbc:   #a0d235 !default;
+$bank-sc:     #0f6ea1 !default;
+$bank-cimb:   #7e2f36 !default;
+$bank-uob:    #0b3979 !default;
+$bank-bay:    #fec43b !default;
+$bank-mega:   #815e3b !default;
+$bank-boa:    #e11e3c !default;
+$bank-cacib:  #0e765b !default;
+$bank-gsb:    #eb198d !default;
+$bank-hsbc:   #fd0d1b !default;
+$bank-db:     #0522a5 !default;
+$bank-ghb:    #f57d23 !default;
+$bank-baac:   #4b9b1d !default;
+$bank-mb:     #150b78 !default;
+$bank-bnp:    #14925e !default;
+$bank-tbank:  #ea621e !default;
+$bank-ibank:  #184615 !default;
+$bank-tisco:  #12549f !default;
+$bank-kk:     #199cc5 !default;
+$bank-icbc:   #c50f1c !default;
+$bank-tcrb:   #0a4ab3 !default;
+$bank-lhb:    #6d6e71 !default;
+$bank-true:   #ff000f !default;
+
+$bank-size:     $input-btn-line-height + calc($input-btn-padding-y * 2);
+$bank-size-sm:  $input-btn-line-height-sm + calc($input-btn-padding-y-sm * 2);
+$bank-size-lg:  $input-btn-line-height-lg + calc($input-btn-padding-y-lg * 2);
+$bank-size-1:   1rem;
+$bank-size-2:   2rem;
+$bank-size-3:   3rem;
+$bank-size-4:   4rem;
+$bank-size-5:   5rem;
+$bank-size-6:  6rem;
+
+$bank-colors: () !default;
+$bank-colors: map-merge(
+  (
+    "bbl":    #1e4598,
+    "kbank":  #138f2d,
+    "rbs":    #032952,
+    "ktb":    #1ba5e1,
+    "jpm":    #321c10,
+    "mufg":   #d61323,
+    "tmb":    #1279be,
+    "scb":    #4e2e7f,
+    "citi":   #1583c7,
+    "smbc":   #a0d235,
+    "sc":     #0f6ea1,
+    "cimb":   #7e2f36,
+    "uob":    #0b3979,
+    "bay":    #fec43b,
+    "mega":   #815e3b,
+    "boa":    #e11e3c,
+    "cacib":  #0e765b,
+    "gsb":    #eb198d,
+    "hsbc":   #fd0d1b,
+    "db":     #0522a5,
+    "ghb":    #f57d23,
+    "baac":   #4b9b1d,
+    "mb":     #150b78,
+    "bnp":    #14925e,
+    "tbank":  #ea621e,
+    "ibank":  #184615,
+    "tisco":  #12549f,
+    "kk":     #199cc5,
+    "icbc":   #c50f1c,
+    "tcrb":   #0a4ab3,
+    "lhb":    #6d6e71,
+    // "true":   #ff000f,
+  ),
+  $bank-colors
+);
+$bank-fonts: () !default;
+$bank-fonts: map-merge(
+  (
+    "baac":   "\EA01",
+    "bay":    "\EA02",
+    "bbl":    "\EA03",
+    "bnp":    "\EA04",
+    "boa":    "\EA05",
+    "cacib":  "\EA06",
+    "cimb":   "\EA07",
+    "citi":   "\EA08",
+    "db":     "\EA09",
+    "ghb":    "\EA0A",
+    "gsb":    "\EA0B",
+    "hsbc":   "\EA0C",
+    "ibank":  "\EA0D",
+    "icbc":   "\EA0E",
+    "jpm":    "\EA0F",
+    "kbank":  "\EA10",
+    "kk":     "\EA11",
+    "ktb":    "\EA12",
+    "lhb":    "\EA13",
+    "mb":     "\EA14",
+    "mega":   "\EA15",
+    "mufg":   "\EA16",
+    "rbs":    "\EA17",
+    "sc":     "\EA18",
+    "scb":    "\EA19",
+    "smbc":   "\EA1A",
+    "tbank":  "\EA1B",
+    "tcrb":   "\EA1C",
+    "tisco":  "\EA1D",
+    "tmb":    "\EA1E",
+    "uob":    "\EA1F",
+  ),
+  $bank-fonts
+);
+
+$bank-sizes: () !default;
+$bank-sizes: map-merge(
+  (
+    "sm": $bank-size-sm,
+    "lg": $bank-size-lg,
+    "1": $bank-size-1,
+    "2": $bank-size-2,
+    "3": $bank-size-3,
+    "4": $bank-size-4,
+    "5": $bank-size-5,
+    "6": $bank-size-6,
+  ),
+  $bank-sizes
+);
+
+@font-face {
+  font-family: "Bank";
+  src: url('#{$font-bank-path}/Thai-Bank.eot');
+  src: url('#{$font-bank-path}/Thai-Bank.eot?#iefix') format('eot'),
+    url('#{$font-bank-path}/Thai-Bank.woff') format('woff'),
+    url('#{$font-bank-path}/Thai-Bank.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.bank {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+  font-size: calc($bank-size * .75);
+  color: $white;
+  width: $bank-size;
+  height: $bank-size;
+
+  &::before {
+    display: inline-block;
+    font-family: "Bank";
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1em;
+    // font-smooth: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  @each $size, $value in $bank-sizes {
+    &.bank-#{$size} {
+      font-size: calc($value * .75);
+      width: $value;
+      height: $value;
+      // padding: 0 calc($value * .01) calc($value * .01) 0;
+      border-radius: calc($value * .1);
+
+      &.bank-shadow {
+        box-shadow: 0px 0px calc($value * .1) 0px rgba(0,0,0,0.2) inset;
+      }
+    }
+  }
+
+  @each $color, $value in $bank-colors {
+    &.bank-#{$color} {
+      background-color: rgba($value, 1);
+    }
+
+    &.bank-light-#{$color} {
+      background-color: rgba($value, .12);
+      color: $value;
+    }
+  }
+
+  @each $font, $value in $bank-fonts {
+    &.bank-#{$font},
+    &.bank-light-#{$font} {
+      &::before {
+        content: $value;
+      }
+    }
+  }
+}
+
+.bank-true,
+.bank-light-true {
+  background-size: 80%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.bank-true {
+  background-color: $bank-true;
+  background-image: url('/assets/webfonts/fontbank/truemoney-white.png');
+}
+
+.bank-light-true {
+  background-color: rgba($black, .05);
+  background-image: url('/assets/webfonts/fontbank/truemoney.png');
+}
+
+// .bank-baac:before { content: "\EA01" }
+// .bank-bay:before { content: "\EA02" }
+// .bank-bbl:before { content: "\EA03" }
+// .bank-bnp:before { content: "\EA04" }
+// .bank-boa:before { content: "\EA05" }
+// .bank-cacib:before { content: "\EA06" }
+// .bank-cimb:before { content: "\EA07" }
+// .bank-citi:before { content: "\EA08" }
+// .bank-db:before { content: "\EA09" }
+// .bank-ghb:before { content: "\EA0A" }
+// .bank-gsb:before { content: "\EA0B" }
+// .bank-hsbc:before { content: "\EA0C" }
+// .bank-ibank:before { content: "\EA0D" }
+// .bank-icbc:before { content: "\EA0E" }
+// .bank-jpm:before { content: "\EA0F" }
+// .bank-kbank:before { content: "\EA10" }
+// .bank-kk:before { content: "\EA11" }
+// .bank-ktb:before { content: "\EA12" }
+// .bank-lhb:before { content: "\EA13" }
+// .bank-mb:before { content: "\EA14" }
+// .bank-mega:before { content: "\EA15" }
+// .bank-mufg:before { content: "\EA16" }
+// .bank-rbs:before { content: "\EA17" }
+// .bank-sc:before { content: "\EA18" }
+// .bank-scb:before { content: "\EA19" }
+// .bank-smbc:before { content: "\EA1A" }
+// .bank-tbank:before { content: "\EA1B" }
+// .bank-tcrb:before { content: "\EA1C" }
+// .bank-tisco:before { content: "\EA1D" }
+// .bank-tmb:before { content: "\EA1E" }
+// .bank-uob:before { content: "\EA1F" }
+
+// .bg__bank-bbl { background-color: $bank-bbl !important; }
+// .bg__bank-kbank { background-color: $bank-kbank !important; }
+// .bg__bank-rbs { background-color: $bank-rbs !important; }
+// .bg__bank-ktb { background-color: $bank-ktb !important; }
+// .bg__bank-jpm { background-color: $bank-jpm !important; }
+// .bg__bank-mufg { background-color: $bank-mufg !important; }
+// .bg__bank-tmb { background-color: $bank-tmb !important; }
+// .bg__bank-scb { background-color: $bank-scb !important; }
+// .bg__bank-citi { background-color: $bank-citi !important; }
+// .bg__bank-smbc { background-color: $bank-smbc !important; }
+// .bg__bank-sc { background-color: $bank-sc !important; }
+// .bg__bank-cimb { background-color: $bank-cimb !important; }
+// .bg__bank-uob { background-color: $bank-uob !important; }
+// .bg__bank-bay { background-color: $bank-bay !important; }
+// .bg__bank-mega { background-color: $bank-mega !important; }
+// .bg__bank-boa { background-color: $bank-boa !important; }
+// .bg__bank-cacib { background-color: $bank-cacib !important; }
+// .bg__bank-gsb { background-color: $bank-gsb !important; }
+// .bg__bank-hsbc { background-color: $bank-hsbc !important; }
+// .bg__bank-db { background-color: $bank-db !important; }
+// .bg__bank-ghb { background-color: $bank-ghb !important; }
+// .bg__bank-baac { background-color: $bank-baac !important; }
+// .bg__bank-mb { background-color: $bank-mb !important; }
+// .bg__bank-bnp { background-color: $bank-bnp !important; }
+// .bg__bank-tbank { background-color: $bank-tbank !important; }
+// .bg__bank-ibank { background-color: $bank-ibank !important; }
+// .bg__bank-tisco { background-color: $bank-tisco !important; }
+// .bg__bank-kk { background-color: $bank-kk !important; }
+// .bg__bank-icbc { background-color: $bank-icbc !important; }
+// .bg__bank-tcrb { background-color: $bank-tcrb !important; }
+// .bg__bank-lhb { background-color: $bank-lhb !important; }

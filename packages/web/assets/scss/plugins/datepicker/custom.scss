@@ -1,0 +1,7 @@
+
+.#{$namespace}-datepicker {
+  .#{$namespace}-icon-calendar,
+  .#{$namespace}-icon-clear {
+    display: none;
+  }
+}

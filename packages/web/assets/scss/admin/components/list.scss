@@ -1,0 +1,121 @@
+.list-last-mb-none {
+  > li {
+    &:last-child {
+      margin-bottom: 0 !important;
+    }
+  }
+}
+
+.list-nav {
+  position: relative;
+  display: flex;
+
+  &::after {
+    content: '';
+    position: absolute;
+    background: $border-color;
+    width: 100%;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+  }
+
+  .list-item {
+    position: relative;
+    // width: 100%;
+    &::after {
+      content: '';
+      position: absolute;
+      background: $border-color;
+      width: 100%;
+      height: 1px;
+      bottom: 0;
+      left: 0;
+    }
+  }
+
+  .list-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-family: $font-family-special;
+    color: $body-color;
+    height: $app-navbar-nav-height;
+    padding: 0 $spacer;
+
+    &.link-active {
+      color: $primary;
+      --fa-primary-color: rgb(102, 77, 201);
+      --fa-secondary-color: rgb(253, 126, 20);
+      
+      &::after {
+        content: '';
+        position: absolute;
+        background: $primary;
+        width: calc(100% - ($spacer * 2));
+        height: 2px;
+        bottom: 0;
+        left: $spacer;
+      }
+    }
+  }
+
+  .list-icon {
+
+  }
+
+  .list-label {
+
+  }
+}
+
+.list-photo {
+  display: flex;
+  width: 100%;
+  min-width: 120px;
+
+  .photo-item {
+    background: $gray-100;
+    width: 64px;
+    aspect-ratio: 1 / 1;
+    border: 3px solid $gray-50;
+    border-radius: 50%;
+    overflow: hidden;
+
+    &:not(:first-child) {
+      margin-left: -24px;
+    }
+
+    &:hover {
+      z-index: 10 !important;
+    }
+
+    .photo {
+      cursor: pointer;
+      background-size: cover;
+      width: 100%;
+      height: 100%;
+    }
+
+    .more {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      // background: $gray-100;
+      width: 100%;
+      height: 100%;
+    }
+
+    &:nth-child(1) { z-index: 9; }
+    &:nth-child(2) { z-index: 8; }
+    &:nth-child(3) { z-index: 7; }
+    &:nth-child(4) { z-index: 6; }
+    &:nth-child(5) { z-index: 5; }
+    &:nth-child(6) { z-index: 4; }
+    &:nth-child(7) { z-index: 3; }
+    &:nth-child(8) { z-index: 2; }
+    &:nth-child(9) { z-index: 1; }
+    &:nth-child(10) { z-index: 0; }
+  }
+}

@@ -1,0 +1,54 @@
+// Import Bootstrap with custom
+@import "./admin/bootstrap/bootstrap";
+
+$app-navbar-width: 250px;
+$app-navbar-nav-height: 40px;
+
+$app-topbar-height: 60px;
+$app-content-header-height: 60px;
+
+// Import Plugins
+@import "./plugins/avatar";
+// @import "./plugins/flag-icon";
+// @import "./plugins/fontawesome";
+// @import "./plugins/fontkanit";
+// @import "./plugins/fontlato";
+@import "./plugins/fontdillenia";
+
+@import "./plugins/datepicker";
+@import "./plugins/dialog";
+@import "./plugins/fontbank";
+@import "./plugins/vuebar";
+@import "./plugins/vueiframe";
+
+@import "./plugins/imagemanager";
+
+@import "./admin/components/badge";
+@import "./admin/components/button";
+@import "./admin/components/card";
+@import "./admin/components/dropdown";
+@import "./admin/components/form";
+@import "./admin/components/list";
+@import "./admin/components/modal";
+@import "./admin/components/notification";
+@import "./admin/components/pagination";
+@import "./admin/components/progress";
+@import "./admin/components/table";
+@import "./admin/components/utilities";
+
+@import "./admin/utilities/typography";
+
+@import "./admin/layouts/app";
+@import "./admin/layouts/auth";
+@import "./admin/layouts/content";
+@import "./admin/layouts/grid";
+@import "./admin/layouts/navbar";
+@import "./admin/layouts/sidebar";
+@import "./admin/layouts/topbar";
+
+@import "./admin/pages/dashboard";
+@import "./admin/pages/member";
+@import "./admin/pages/lottery";
+@import "./admin/pages/movie";
+@import "./admin/pages/ant";
+@import "./admin/pages/army";

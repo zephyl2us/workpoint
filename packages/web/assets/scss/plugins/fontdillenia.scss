@@ -1,0 +1,15 @@
+ $font-kanit-path: "~/static/assets/webfonts/fontdillenia" !default;
+
+ @font-face {
+   font-family: 'DilleniaUPC';
+   font-style: normal;
+   font-weight: 400;
+   src: url('#{$font-kanit-path}/DilleniaUPC.ttf') format('truetype');
+ }
+
+ @font-face {
+  font-family: 'DilleniaUPC';
+  font-style: normal;
+  font-weight: 600;
+  src: url('#{$font-kanit-path}/DilleniaUPC-Bold.ttf') format('truetype');
+}
