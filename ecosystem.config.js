@@ -111,7 +111,7 @@ module.exports = {
           "ENV_PATH": "./env"
         }
       },
-      "worker": {
+      "worker-general": {
         "user" : "ubuntu",
         "host" : ["152.42.242.215", "104.248.158.136"],
         "key"  : "~/.ssh/workpoint",
