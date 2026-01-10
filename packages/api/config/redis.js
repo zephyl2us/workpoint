@@ -34,6 +34,7 @@ const config = {
   local: {
     host: Env.get('REDIS_HOST'),
     port: Env.get('REDIS_PORT', 6379),
+    username: Env.get('REDIS_USERNAME', null),
     password: Env.get('REDIS_PASSWORD', null),
     db: 0,
     keyPrefix: 'mega:',
@@ -54,6 +55,7 @@ const config = {
   session: {
     host: Env.get('REDIS_HOST'),
     port: Env.get('REDIS_PORT', 6379),
+    username: Env.get('REDIS_USERNAME', null),
     password: Env.get('REDIS_PASSWORD', null),
     db: 1,
     keyPrefix: 'mega:',
@@ -66,6 +68,7 @@ const config = {
   user: {
     host: Env.get('REDIS_HOST'),
     port: Env.get('REDIS_PORT', 6379),
+    username: Env.get('REDIS_USERNAME', null),
     password: Env.get('REDIS_PASSWORD', null),
     db: 2,
     keyPrefix: 'mega:',
@@ -78,6 +81,7 @@ const config = {
   temp: {
     host: Env.get('REDIS_HOST'),
     port: Env.get('REDIS_PORT', 6379),
+    username: Env.get('REDIS_USERNAME', null),
     password: Env.get('REDIS_PASSWORD', null),
     db: 3,
     keyPrefix: 'mega:',
@@ -90,6 +94,7 @@ const config = {
   lottery: {
     host: Env.get('REDIS_HOST'),
     port: Env.get('REDIS_PORT', 6379),
+    username: Env.get('REDIS_USERNAME', null),
     password: Env.get('REDIS_PASSWORD', null),
     db: 4,
     keyPrefix: 'mega:',
@@ -102,6 +107,7 @@ const config = {
   army: {
     host: Env.get('REDIS_HOST'),
     port: Env.get('REDIS_PORT', 6379),
+    username: Env.get('REDIS_USERNAME', null),
     password: Env.get('REDIS_PASSWORD', null),
     db: 5,
     keyPrefix: 'mega:',
@@ -114,6 +120,7 @@ const config = {
 	queue: {
 		host: Env.get('REDIS_HOST'),
 		port: Env.get('REDIS_PORT', 6379),
+    username: Env.get('REDIS_USERNAME', null),
 		password: Env.get('REDIS_PASSWORD', null),
 		db: 10,
 		keyPrefix: 'mega:',
