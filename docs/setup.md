@@ -42,15 +42,19 @@ npm install pm2 -g
 # Install AdonisJS CLI
 npm i -g @adonisjs/cli
 
-# Listening on port 80 (For Web Server)
-sudo setcap cap_net_bind_service=+ep ~/.nvm/versions/node/v14.21.3/bin/node
+<!-- # Listening on port 80 (For Web Server)
+sudo setcap cap_net_bind_service=+ep ~/.nvm/versions/node/v14.21.3/bin/node -->
+
+# Redirect port 80 to 3333
+sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 3333
+sudo apt install iptables-persistent
 
 # PM2 Setup and Deploy (Client)
 pm2 deploy web setup
 pm2 deploy web
 
 # PM2 auto start after deploy. (Set every server)
-
+pm2 save
 
 # Install Choromium package for Puppeteer
 sudo apt-get install chromium-browser 
