@@ -19,7 +19,7 @@
 
     "restart:api": "pm2 deploy api exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 restart all\"",
     "restart:cron": "pm2 deploy cron exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 restart all\"",
-    "restart:worker": "pm2 deploy worker-general exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3",
+    "restart:worker": "pm2 deploy worker-general exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 restart all\"",
     "restart:web": "pm2 deploy web exec \"source /home/ubuntu/.nvm/nvm.sh && nvm use v14.21.3 && pm2 restart all\"",
     "restart:backend": "npm run restart:api && npm run restart:cron && npm run restart:worker && npm run restart:backend",
     "restart:all": "npm run restart:api && npm run restart:cron && npm run restart:worker && npm run restart:web"
