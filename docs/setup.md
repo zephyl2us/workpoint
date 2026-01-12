@@ -46,8 +46,12 @@ npm i -g @adonisjs/cli
 sudo setcap cap_net_bind_service=+ep ~/.nvm/versions/node/v14.21.3/bin/node -->
 
 # Redirect port 80 to 8000
+sudo iptables -t nat -F
 sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8000
+sudo iptables -t nat -A OUTPUT -o lo -p tcp --dport 80 -j REDIRECT --to-port 8000
+sudo iptables -t nat -L -n -v
 sudo apt install iptables-persistent
+sudo netfilter-persistent save
 
 # PM2 Setup and Deploy (Client)
 pm2 deploy web setup
