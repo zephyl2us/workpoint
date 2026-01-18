@@ -10,16 +10,19 @@ class ExtOneUserSchema extends Schema {
       table.bigInteger('one_user_id').unsigned().index()
       table.integer('master_user_id').unsigned().nullable().index()
       table.integer('agent_user_id').unsigned().nullable().index()
+      table.string('trans_username', 30).notNullable()
       table.string('username', 30).notNullable().unique()
       table.enu('role', ['admin', 'subadmin', 'master', 'submaster', 'agent', 'subagent', 'member']).defaultTo('member').index()
       table.string('first_name', 255).nullable()
       table.string('last_name', 255).nullable()
       table.date('date_of_birth').nullable()
-      table.string('mobile', 20).nullable()
+      table.string('mobile', 20).nullable().index()
+      table.enum('status', ['active', 'suspended', 'transfered']).defaultTo('active').index()
       table.integer('login_count').unsigned().nullable()
       table.dateTime('last_login_at').nullable()
 
       const decimals = [
+        'credit', 'revenue',
         'deposit', 'withdraw', 'bet_credit', 'bet_rolling', 'result_bet_credit',
         'bet_lotto_government', 'bet_lotto_stock', 'bet_lotto_yeekee',
         'bet_game_paoyingchub', 'bet_game_huakoi',

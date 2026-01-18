@@ -82,7 +82,7 @@ class OneController {
 		try {
       const filename = `one_${moment().unix()}.csv`
 
-			console.log(filename)
+			// console.log(filename)
 
       let csvContent = ''
       csvContent = `first_name,last_name,mobile\r\n`
@@ -108,7 +108,7 @@ class OneController {
       return response.send(csvContent)
 
 		} catch (error) {
-      console.error('Error downloading data:', error)
+      // console.error('Error downloading data:', error)
       return response.status(500).send({ error: 'Failed to download data' })
 		}
 		// const users = await this.queryUsers(filter).paginate(currentPage)
@@ -128,7 +128,7 @@ class OneController {
 
 		const conditions = filter.conditions
 
-		console.log(`conditions`, conditions)
+		// console.log(`conditions`, conditions)
 
 		for (let i = 0; i < _.size(conditions); i++) {
 			const filter = conditions[i]

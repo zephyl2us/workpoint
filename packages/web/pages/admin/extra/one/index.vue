@@ -71,12 +71,13 @@
                   <th style="min-width: 84px;" class="pl-3">#</th>
                   <th width="100%">ชื่อ</th>
                   <!-- <th style="min-width: 40px;"></th> -->
-                  <th style="min-width: 150px;">เบอร์โทร</th>
+                  <th style="min-width: 130px;">เบอร์โทร</th>
+                  <th style="min-width: 120px;">เครดิต</th>
                   <th style="min-width: 150px;">ฝาก</th>
                   <th style="min-width: 150px;">ถอน</th>
-                  <th style="min-width: 150px;">ยอดทายผล</th>
-                  <th style="min-width: 150px;">ยอดทายผลหวย</th>
-                  <th style="min-width: 150px;">ยอดทายผลเกม</th>
+                  <th style="min-width: 120px;">ยอดทายผล</th>
+                  <th style="min-width: 120px;">ยอดทายผลหวย</th>
+                  <th style="min-width: 120px;">ยอดทายผลเกม</th>
                   <th></th>
                 </tr>
               </thead>
@@ -98,6 +99,14 @@
                   <td>
                     <div class="">
                       <span class="font-numeral">{{ record.mobile }}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="font-size-sm">
+                      <span class="font-numeral font-weight-bolder" :class="{ 'text-success' : record.credit > 0 }">{{ UIRenderNumber(record.credit, '0,0.00') }}</span>
+                    </div>
+                    <div class="font-size-sm">
+                      <span class="font-numeral">{{ UIRenderNumber(record.revenue, '0,0.00') }}</span>
                     </div>
                   </td>
                   <td>
@@ -212,6 +221,8 @@ export default {
       filterLists: [
           // 'login_count',
 					'last_login_at',
+          'credit',
+          'revenue',
 					'deposit',
 					// 'deposit_times',
 					'latest_deposit',

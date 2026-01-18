@@ -90,7 +90,8 @@ const commands = [
   'App/Commands/ArmyProxyStatus',
   'App/Commands/MovieReTranscode',
   'App/Commands/MovieUpdate',
-  'App/Commands/MovieVideo'
+  'App/Commands/MovieVideo',
+  'App/Commands/SyncLottoone'
 ]
 
 /**
