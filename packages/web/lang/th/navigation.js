@@ -90,6 +90,7 @@ export default {
   extra: 'ส่วนเสริม',
   extra_katei: 'KATEI',
   extra_one: 'ONE',
+  extra_campaign: 'Campaign',
 
   setting: 'การตั้งค่า',
   setting_user: 'ผู้ดูแลระบบ',

@@ -2,6 +2,7 @@
 
 module.exports = [
   'App/Jobs/BullTest',
+  'App/Jobs/CampaignLottoone',
   'App/Jobs/KueLogger',
   'App/Jobs/LotteryStart',
   'App/Jobs/LotteryAuthDaily',

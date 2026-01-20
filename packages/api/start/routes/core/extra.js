@@ -19,6 +19,33 @@ Route.group(() => {
     Route.get('one', 'OneController.index')
     .middleware(['acl:extra.one.view'])
 
+    Route.get('campaign', 'CampaignController.index')
+      .middleware(['acl:extra.campaign.view'])
+
+    Route.get('campaign/create/one', 'CampaignController.one')
+      .middleware(['acl:extra.campaign.create'])
+
+    Route.post('campaign/create/one', 'CampaignController.storeOne')
+      .middleware(['acl:extra.campaign.create'])
+
+    Route.get('campaign/create/huay', 'CampaignController.huay')
+      .middleware(['acl:extra.campaign.create'])
+
+    Route.post('campaign/create/huay', 'CampaignController.storeHuay')
+      .middleware(['acl:extra.campaign.create'])
+
+    Route.get('campaign/:id', 'CampaignController.view')
+      .middleware(['acl:extra.campaign.view'])
+
+    Route.patch('campaign/:id/user/:user_id/status', 'CampaignController.updateStatus')
+      .middleware(['acl:extra.campaign.action'])
+
+    Route.post('campaign/:id/user/:user_id/sms', 'CampaignController.sendSms')
+      .middleware(['acl:extra.campaign.action'])
+
+    Route.post('campaign/:id/user/:user_id/check', 'CampaignController.checkUser')
+      .middleware(['acl:extra.campaign.action'])
+
     // Route.get('one/export', 'OneController.export')
     // .middleware(['acl:extra.one.export'])
 

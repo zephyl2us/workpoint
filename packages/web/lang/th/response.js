@@ -9,7 +9,11 @@ export default {
     army_ant_created: 'สร้างกองทัพมดสำเร็จ',
     army_ant_updated: 'บันทึกข้อมูลกองทัพมดสำเร็จ',
     army_ant_deleted: 'ลบข้อมูลกองทัพมดสำเร็จ',
-    password_changed: 'เปลี่ยนรหัสผ่านสำเร็จ'
+    password_changed: 'เปลี่ยนรหัสผ่านสำเร็จ',
+    campaign: {
+      created: 'สร้างแคมเปญสำเร็จ',
+      status_updated: 'อัพเดทสถานะสำเร็จ'
+    }
   },
   error: {
     nothing_update: 'ไม่มีข้อมูลอัพเดท',
@@ -21,6 +25,10 @@ export default {
       create_failed: 'ไม่สามารถสร้างน้องมดได้',
       create_farm_failed: 'ไม่สามารถส่งข้อมูลไปยังฟาร์มได้',
       cannot_send_to_cloud: 'ไม่สามารถย้ายไปยังคลาวด์ได้'
+    },
+    campaign: {
+      assigned_to_another_agent: 'ลูกค้าอยู่ภายใต้การดูแลของทีมงานคนอื่นแล้ว',
+      not_assign: 'ลูกค้ายังไม่ถูกดูแล'
     }
   }
 }

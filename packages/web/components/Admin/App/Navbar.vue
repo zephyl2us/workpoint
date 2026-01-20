@@ -215,6 +215,12 @@ export default {
             icon: 'square-1',
             permission: 'extra.one.view',
           },
+          {
+            name: 'extra_campaign',
+            path: '/extra/campaign',
+            icon: 'bullhorn',
+            permission: 'extra.campaign.view',
+          },
         ],
         setting: [
           {

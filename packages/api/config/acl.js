@@ -93,7 +93,12 @@ module.exports = {
       one: {
         view: 0,
         export: 0
-      }
+      },
+      campaign: {
+        view: 0,
+        create: 0,
+        action: 0
+      },
     }
   }
 }

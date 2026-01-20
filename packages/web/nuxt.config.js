@@ -67,6 +67,7 @@ const config = {
     '~/plugins/vue-validate',
     '~/plugins/gtag.js',
     { src: '~/plugins/axios.js', ssr: false },
+    { src: '~/plugins/sip.client.js', mode: 'client' },
     { src: '~/plugins/vue-apexchart.js', ssr: false },
     { src: '~/plugins/vue-iframe', ssr: false },
     { src: '~/plugins/vue-paginate', ssr: false },

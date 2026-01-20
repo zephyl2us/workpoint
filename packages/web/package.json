@@ -34,6 +34,7 @@
     "nuxt-video-player": "^1.0.17",
     "popper.js": "^1.16.1",
     "request-interval": "^2.0.0",
+    "sip.js": "^0.21.2",
     "ua-parser-js": "^1.0.35",
     "vee-validate": "^3.4.15",
     "video.js": "^8.10.0",
