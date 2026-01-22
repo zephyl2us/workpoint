@@ -1,87 +1,93 @@
 <template>
-  <Modal v-if="record.id" ref="campaignUser" :on-close="onClose" :size="'sm'" :escape-close="true">
+  <Modal v-if="user.id" ref="campaignUser" :on-close="onClose" :size="'sm'" :escape-close="true">
     <template #title>
       <h5 class="modal-title">โทรศัพท์</h5>
     </template>
     <template #body>
-      <ValidationObserver :ref="formRef" v-slot="{ handleSubmit }">
-        <form @submit.prevent="handleSubmit(onSubmit)">
-          <div class="modal-body">
-            <div class="d-flex flex-column align-items-center">
-              <div class="av av-6 mb-3">
-                <i class="av-icon fas fa-user"></i>
-              </div>
-              
-              <h3 class="mb-2">คุณ{{ record.first_name }} {{ record.last_name }}</h3>
-              
-              <!-- <p class="text-muted mb-2">{{ targetNumber || 'ไม่ระบุเบอร์โทร' }}</p> -->
-
-              <div v-if="_.eq('waiting', record.status)" class="d-flex align-items-center mb-4" style="height: 29.5px;">
-                <span :class="statusColor" style="font-weight: bold;">
-                  
-                </span>
-              </div>
-
-              <select 
-                v-else-if="_.includes(['ready_to_call', 'call_ended'], statusMessage)" 
-                v-model="input.user_status"
-                class="form-control form-control-sm text-center mb-4" 
-                style="width: auto;">
-                <option v-for="status in statuses" :key="`status-${status}`" :value="status">{{ $t(`extra.campaign_status.${status}`) }}</option>
-              </select>
-
-              <div v-else class="d-flex align-items-center mb-4" style="height: 29.5px;">
-  
-                <span v-if="timerInterval" class="text-success font-weight-bold" style="font-size: 1.2em;">
-                  {{ callDuration }}
-                </span>
-                
-                <span v-else-if="activeSession" class="text-warning font-weight-bold">
-                  <i class="fas fa-spinner fa-spin mr-1"></i> {{ statusMessage }}
-                </span>
-
-                <span v-else :class="statusColor" style="font-weight: bold;">
-                  {{ statusMessage }}
-                </span>
-
-              </div>
-
-              <button 
-                v-if="activeSession" 
-                type="button"
-                @click="endCall"
-                class="btn btn-lg btn-danger rounded-circle" 
-                style="height: 50px; width: 50px;"
-              >
-                <i class="fa-sharp-duotone fa-solid fa-phone-hangup"></i>
-              </button>
-
-              <SlideUnlock 
-                v-if="!activeSession && isRegistered"
-                @unlock="handleUnlock"
-                :reset-trigger="isReset"
-                text="เลื่อนเพื่อโทร"
-                success-text="กำลังโทร..."
-              />
-
-              <button 
-                v-if="!isRegistered && !activeSession"
-                type="button"
-                class="btn btn-sm btn-outline-primary mt-2"
-                @click="connectPhone"
-                :disabled="isConnecting"
-              >
-                <i class="fas fa-sync" :class="{'fa-spin': isConnecting}"></i> 
-                {{ isConnecting ? 'Connecting...' : 'Click to Connect System' }}
-              </button>
-
+      <form>
+        <div class="modal-body">
+          <div class="d-flex flex-column align-items-center">
+            <div class="av av-6 mb-3">
+              <i class="av-icon fas fa-user"></i>
             </div>
+            
+            <h3>คุณ{{ user.first_name }} {{ user.last_name }}</h3>
+            <div v-if="hasPermission('extra.campaign.create') || _.eq(user.actor_user_id, authUser.id)">เครดิตคงเหลือ : 
+              <strong>{{ UIRenderNumber(_.get(user, 'payload.credit'), '0,0.00') }}</strong>
+              <strong v-if="parseFloat(_.get(user, 'payload.revenue')) > 0"> | {{ UIRenderNumber(_.get(user, 'payload.revenue'), '0,0.00') }}</strong>
+            </div>
+
+            <div class="mb-3"></div>
+            
+            <!-- <p class="text-muted mb-2">{{ targetNumber || 'ไม่ระบุเบอร์โทร' }}</p> -->
+
+            <div v-if="_.eq('waiting', user.status)" class="d-flex align-items-center mb-4" style="height: 29.5px;">
+              <span :class="statusColor" style="font-weight: bold;"></span>
+            </div>
+
+            <select 
+              v-else-if="_.includes(['ready_to_call', 'call_ended'], statusMessage)"
+              v-model="input.user_status"
+              class="form-control form-control-sm text-center mb-4"
+              style="width: auto;">
+              <option v-for="status in statuses" :key="`status-${status}`" :value="status">{{ $t(`extra.campaign_status.${status}`) }}</option>
+            </select>
+
+            <div v-else class="d-flex align-items-center mb-4" style="height: 29.5px;">
+
+              <span v-if="timerInterval" class="text-success font-weight-bold" style="font-size: 1.2em;">
+                {{ callDuration }}
+              </span>
+              
+              <span v-else-if="activeSession" class="text-warning font-weight-bold">
+                <i class="fas fa-spinner fa-spin mr-1"></i> {{ statusMessage }}
+              </span>
+
+              <span v-else :class="statusColor" style="font-weight: bold;">
+                {{ statusMessage }}
+              </span>
+            </div>
+
+            <button 
+              v-if="activeSession" 
+              type="button"
+              class="btn btn-lg btn-danger rounded-circle" 
+              style="height: 50px; width: 50px;"
+              @click="endCall"
+            >
+              <i class="fa-sharp-duotone fa-solid fa-phone-hangup"></i>
+            </button>
+
+            <SlideUnlock 
+              v-if="!activeSession && isRegistered"
+              :reset-trigger="isReset"
+              text="เลื่อนเพื่อโทร"
+              success-text="กำลังโทร..."
+              @unlock="onCall"
+            />
+
+            <button 
+              v-if="!isRegistered && !activeSession"
+              type="button"
+              class="btn btn-sm btn-outline-primary mt-2"
+              :disabled="isConnecting"
+              @click="connectPhone"
+            >
+              <i class="fas fa-sync" :class="{'fa-spin': isConnecting}"></i> 
+              {{ isConnecting ? 'Connecting...' : 'Click to Connect System' }}
+            </button>
+
           </div>
-          <div class="modal-footer">
-            <audio ref="remoteAudio" autoplay style="display: none;"></audio>
-          </div>
-        </form>
-      </ValidationObserver>
+          <audio ref="remoteAudio" autoplay style="display: none;"></audio>
+        </div>
+        <div v-if="canSendSms" class="modal-body border-top">
+
+          <button type="button" class="btn btn-success mx-auto" @click="onSendSms">
+            <i class="fa-regular fa-message-lines mr-1"></i>
+            <span class="">ส่งข้อความ</span>
+          </button>
+        </div>
+      </form>
     </template>
   </Modal>
 </template>
@@ -117,7 +123,14 @@ export default {
       formRef: 'editMovie',
       refId: null,
       input: {
-        user_status: 'waiting'
+        user_status: 'waiting',
+        sms_type: ''
+      },
+      user: {
+        status: null
+      },
+      sms: {
+
       },
       statuses: ['calling', 'answered', 'no_answer', 'rejected', 'unreachable'],
       
@@ -150,22 +163,25 @@ export default {
       'responseSuccess',
       'responseError'
     ]),
-    statusColor() {
+    statusColor () {
       if (this.activeSession) return 'text-success'; // Bootstrap class
       if (this.isRegistered) return 'text-primary'
       if (this.statusMessage.includes('failed')) return 'text-danger'
       return 'text-muted'
+    },
+    canSendSms () {
+      return !this._.includes(['waiting', 'calling'], this.user.status)
     }
   },
   watch: {
-    'record': {
-      handler (response) {
-        console.log(response)
-        this.setDefault()
-      },
-      deep: true
-    },
-    'record.status': {
+    // 'user': {
+    //   handler (response) {
+    //     // console.log(response)
+    //     this.setDefault()
+    //   },
+    //   deep: true
+    // },
+    'user.status': {
       handler (response) {
         // console.log(response)
         // this.setDefault()
@@ -175,6 +191,11 @@ export default {
       handler (value) {
         // console.log(value)
         this.updateUserStatus(value)
+      }
+    },
+    'statusMessage': {
+      handler (value) {
+        console.log(value)
       }
     },
     'responseSuccess': {
@@ -199,6 +220,7 @@ export default {
     },
   },
   async beforeDestroy() {
+    this.$pusher.unsubscribe(`campaign-user.${this.refId}`)
     this.stopTimer(); // <-- เพิ่มบรรทัดนี้
     
     if (this.userAgent) {
@@ -216,12 +238,20 @@ export default {
   },
   async mounted () {
     this.setDefault()
-    // Map เบอร์โทรจาก Record (สมมติว่าชื่อ field 'phone' หรือ 'mobile')
-    // ถ้าไม่มีให้ใส่เบอร์ Default หรือว่างไว้
-    this.targetNumber = this.record.phone || this.record.mobile || '0812345678'; 
-    this.refId = this.record.id
+    this.refId = this.user.id
 
-    // 2. Dynamic Import 'sip.js' เฉพาะตอน mounted (Client-side)
+    const channel = this.$pusher.subscribe(`campaign-user.${this.refId}`)
+
+    channel.bind('update', (data) => {
+      if (this._.has(data, 'payload')) {
+        data.payload = !_.isObject(data.payload) ? JSON.parse(data.payload) : data.payload
+      }
+      // console.log(data)
+      this.user = data
+    })
+
+    this.targetNumber = this.user.phone || this.user.mobile
+    
     try {
       const sip = await import('sip.js')
       UserAgent = sip.UserAgent
@@ -244,35 +274,55 @@ export default {
   methods: {
     ...mapActions('admin-extra-campaign', [
       'updateStatus',
+      'sendSms'
     ]),
 
     setDefault () {
       const record = this._.cloneDeep(this.record)
+      this.user = record
       this.input.user_status = record.status
     },
 
     async updateUserStatus (status, isCalling = false) {
       // console.log(this.record)
-      if (this.record.status === status) return false
+      if (this.user.status === status) return false
 
       await this.updateStatus({
-        id: this._.get(this.record, 'campaign_id'),
-        user_id: this._.get(this.record, 'id'),
+        id: this._.get(this.user, 'campaign_id'),
+        user_id: this._.get(this.user, 'id'),
         status,
         is_calling: isCalling
       })
     },
-    
-    async handleUnlock () {
+
+    async onCall () {
       await this.updateUserStatus('calling', true)
       // console.log('Unlock -> Calling')
       this.makeCall()
     },
 
-    onSubmit: _.debounce(function () {
+    onSendSms: _.debounce(function () {
       this.submitting()
       // Submit Logic...
-    }, 1000, { leading: true }),
+
+      const regex = /^(?:นางสาว|นาย|นาง|น\.ส\.)\s*/
+
+      let name = this._.get(this.user, 'first_name')
+      name = name.replace(regex, '')
+      name = `คุณ${name}`
+
+      const input = {
+        id: this._.get(this.user, 'campaign_id'),
+        user_id: this._.get(this.user, 'id'),
+        mobile: this.user.mobile,
+        message: `${name} สามารถติดต่อย้ายข้อมูลไปยังระบบใหม่พร้อมรับโปรโมชั่นได้ที่ ไลน์ไอดี : @one.transfer`
+      }
+
+      console.log(input)
+
+      this.sendSms(input)
+
+    }, 5000, { leading: true }),
 
     async connectPhone() {
       if (!this.isLibraryLoaded) return

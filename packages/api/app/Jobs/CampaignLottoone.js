@@ -41,18 +41,22 @@ class CampaignLottoone {
 
 			for (let i = 0; i < _.size(records); i++) {
 				const record = records[i]
-				console.log(record.one_user_id)
+				// console.log(record.one_user_id)
 
-				await CampaignUserRepository.create({
-					campaign_id: campaignId,
-					first_name: record.first_name,
-					last_name: record.last_name,
-					mobile: record.mobile,
-					send_sms_count: 0,
-					is_register: 0,
-					is_login: 0,
-					payload: record,
-				})
+				const user = await CampaignUserRepository.findBy('mobile', record.mobile)
+
+				if (!user) {
+					await CampaignUserRepository.create({
+						campaign_id: campaignId,
+						first_name: record.first_name,
+						last_name: record.last_name,
+						mobile: record.mobile,
+						send_sms_count: 0,
+						is_register: 0,
+						is_login: 0,
+						payload: record,
+					})
+				}
 			}
 
 		} catch (e) {

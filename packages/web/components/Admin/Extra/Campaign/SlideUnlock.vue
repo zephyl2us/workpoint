@@ -1,8 +1,8 @@
 <template>
   <div 
+    ref="containerRef"
     class="slide-container" 
     :class="{ 'unlocked': isUnlocked }"
-    ref="containerRef"
   >
     <div 
       class="slide-fill" 

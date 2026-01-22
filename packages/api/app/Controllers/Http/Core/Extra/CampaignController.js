@@ -18,12 +18,14 @@ class CampaignController {
 		return [
 			'App/Repositories/CampaignRepository',
 			'App/Repositories/CampaignUserRepository',
+			'App/Repositories/SmsRepository',
 		]
 	}
 
-  constructor(CampaignRepository, CampaignUserRepository) {
+  constructor(CampaignRepository, CampaignUserRepository, SmsRepository) {
     this.CampaignRepository = CampaignRepository
     this.CampaignUserRepository = CampaignUserRepository
+		this.SmsRepository = SmsRepository
   }
 
   async index ({ request, response }) {
@@ -88,7 +90,6 @@ class CampaignController {
       pagination: pagination
     })
   }
-
 
   async updateStatus ({ auth, request, response, params }) {
 		const authUser = auth.user
@@ -158,8 +159,77 @@ class CampaignController {
 			code: 'campaign.status_updated',
 			record: updated
 		})
-		
   }
+
+	async sendSms ({ auth, request, response, params }) {
+		const authUser = auth.user
+		const actorId = authUser.id
+
+		// const mobile = request.input('mobile')
+		// const message = request.input('message')
+    // console.log(props)
+
+		const userId = params.user_id
+		const user = await this.CampaignUserRepository.findBy('id', userId)
+
+    if(!_.get(user, 'id')) {
+      return response.status(400).json({
+        code: 'query.not_found',
+        message: 'User not found'
+      })
+    }
+
+		if (user.actor_user_id && !_.eq(actorId, user.actor_user_id)) {
+      return response.status(400).json({
+        code: 'campaign.assigned_to_another_agent',
+        message: 'Member is assigned to another agent'
+      })
+		}
+
+		if (!user.actor_user_id) {
+      return response.status(400).json({
+        code: 'campaign.not_assign',
+        message: 'Member is not assign'
+      })
+		}
+
+		const status = user.status
+		const mobile = user.mobile
+		
+		if (!_.includes(['answered', 'no_answer', 'rejected', 'unreachable'], status)) {
+      return response.status(400).json({
+        code: 'campaign.status_invalid',
+        message: 'Status Invalid'
+      })
+		}
+		
+		const sendSmsCount = user.send_sms_count || 0
+		const updated = await this.CampaignUserRepository.update(user, {
+			send_sms_count: sendSmsCount + 1
+		})
+
+    if(!updated) {
+      return response.status(400).json({
+        code: 'nothing_update',
+        message: 'Nothing Update'
+      })
+    }
+
+
+		const from = 'ONE'
+		const phone = mobile
+		// const phone = '0956387138'
+		const message = request.input('message')
+		const driver = 'clicksend'
+
+		await this.SmsRepository.send(from, phone, message, driver)
+
+		return response.ok({
+			status: 'success',
+			code: 'campaign.sms_sended',
+			// record: updated
+		})
+	}
 
 	async one ({ request, response }) {
 		const currentPage = request.input('page', 1)

@@ -34,4 +34,5 @@ module.exports = [
 
 
   'App/Jobs/LotteryPowerballResult',
+  'App/Jobs/SendSms',
 ]

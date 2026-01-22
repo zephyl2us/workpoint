@@ -47,12 +47,22 @@
                     </div>
                   </td>
                   <td>
-                    <div class="font-size-sm">
-                      <span class="font-numeral font-weight-bolder" :class="{ 'text-success' : _.get(user, 'payload.credit') > 0 }">{{ UIRenderNumber(_.get(user, 'payload.credit'), '0,0.00') }}</span>
-                    </div>
-                    <div class="font-size-sm">
-                      <span class="font-numeral">{{ UIRenderNumber(_.get(user, 'payload.revenue'), '0,0.00') }}</span>
-                    </div>
+                    <template v-if="hasPermission('extra.campaign.create') || _.eq(user.actor_user_id, authUser.id)">
+                      <div class="font-size-sm">
+                        <span class="font-numeral font-weight-bolder" :class="{ 'text-success' : _.get(user, 'payload.credit') > 0 }">{{ UIRenderNumber(_.get(user, 'payload.credit'), '0,0.00') }}</span>
+                      </div>
+                      <div class="font-size-sm">
+                        <span class="font-numeral">{{ UIRenderNumber(_.get(user, 'payload.revenue'), '0,0.00') }}</span>
+                      </div>
+                    </template>
+                    <template v-else>
+                      <div class="font-size-sm">
+                        <span class="font-numeral font-weight-bolder">*.**</span>
+                      </div>
+                      <div class="font-size-sm">
+                        <span class="font-numeral">*.**</span>
+                      </div>
+                    </template>
                   </td>
                   <td>
                     <div>
@@ -68,7 +78,7 @@
                     <div>
                       <span
                         class="badge"
-                        :class="{ 'badge-success': user.sms_send_count, 'badge-light-secondary': !user.sms_send_count }">
+                        :class="{ 'badge-success': user.send_sms_count > 0, 'badge-light-secondary': !user.send_sms_count }">
                         ส่งข้อความ
                       </span>
                       <span
@@ -85,9 +95,11 @@
                   </td>
                   <td>
                     <div class="table-action">
-                      <button class="btn btn-sm btn-light-primary" @click="onClickCampaignUserModal(user)">
-                        <i class="fa-regular fa-list-ul"></i>
-                      </button>
+                      <template v-if="hasPermission('extra.campaign.action')">
+                        <button class="btn btn-sm btn-light-primary" @click="onClickCampaignUserModal(user)">
+                          <i class="fa-regular fa-phone"></i>
+                        </button>
+                      </template>
                     </div>
                   </td>
                 </tr>

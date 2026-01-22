@@ -7,6 +7,7 @@ const Redis = use('Redis')
 const moment = use('moment')
 const Helper = use('App/Helper')
 const rp = use('request-promise')
+const SendSmsJob = use('App/Jobs/SendSms')
 
 class SmsRepository {
 
@@ -36,8 +37,10 @@ class SmsRepository {
       driver: driver
     }
 
-    await this.sending(data)
-    // Bull.add(SendSms.key, data)
+    // console.log(data)
+
+    // await this.sending(data)
+    Bull.add(SendSmsJob.key, data)
   }
 
   // For Jobs
@@ -48,6 +51,8 @@ class SmsRepository {
       result = this.senderThsms(data)
     } else if(_.eq(data.driver, 'vonage')) {
       result = this.senderVonage(data)
+    } else if(_.eq(data.driver, 'clicksend')) {
+      result = this.senderClickSend(data)
     }
 
     return result
@@ -102,6 +107,60 @@ class SmsRepository {
         console.log('There was an error sending the messages.')
         console.error(err)
       })
+  }
+
+
+	async senderClickSend(data) {
+
+    // console.log(`senderClickSend`, data)
+    // return
+
+    const username = Env.get('CLICKSEND_USERNAME')
+    const apiKey = Env.get('CLICKSEND_API_KEY')
+
+    const authString = Buffer.from(`${username}:${apiKey}`).toString('base64')
+
+    const to = '+66' + data.to
+    // const from = data.from
+    const message = data.message
+
+    const options = {
+      method: 'POST',
+      uri: 'https://rest.clicksend.com/v3/sms/send',
+      headers: {
+        'Authorization': `Basic ${authString}`,
+        'Content-Type': 'application/json'
+      },
+      body: {
+        messages: [
+          {
+            to: to,
+            body: message,
+            // source: 'adonis-app'
+          }
+        ]
+      },
+      json: true
+    }
+
+    try {
+      // ยิง Request
+      const result = await rp(options)
+      
+      return response.status(200).json({
+        status: 'success',
+        data: result
+      })
+
+    } catch (error) {
+      // request-promise จะ throw error ถ้า status code ไม่ใช่ 2xx
+      // console.error('SMS Error:', error.error || error.message)
+      
+      return response.status(500).json({
+        status: 'error',
+        details: error.error || error.message
+      })
+    }
   }
 
   async otpRequest (request, app, phone) {

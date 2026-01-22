@@ -37,9 +37,10 @@
     "@adonisjs/validator": "^5.0.6",
     "@adonisjs/websocket": "^1.0.12",
     "@aws-sdk/client-s3": "^3.354.0",
+    "@dabh/diagnostics": "2.0.2",
     "@radmen/adonis-lucid-soft-deletes": "^0.2.0",
     "@rocketseat/adonis-bull": "^0.2.0",
-    "@vonage/server-sdk": "^3.9.1",
+    "@vonage/server-sdk": "^3.25.1",
     "adonis-cache": "^0.3.4",
     "adonis-guard": "^1.0.0-beta.5",
     "adonis-lucid-filter": "^1.0.5",
@@ -52,6 +53,7 @@
     "aws-sdk": "^2.1400.0",
     "bull": "3.18.0",
     "child_process": "^1.0.2",
+    "clicksend": "^5.0.79",
     "cross-env": "^5.2.0",
     "crypto-js": "^4.1.1",
     "fast-json-stringify": "^5.7.0",
@@ -64,6 +66,7 @@
     "md5": "^2.2.1",
     "moment": "^2.24.0",
     "mysql2": "^3.2.0",
+    "nexmo": "^2.9.1",
     "node-tesseract-ocr": "^2.2.1",
     "openai": "^3.3.0",
     "os": "^0.1.2",
@@ -77,9 +80,8 @@
     "request-promise": "^4.2.6",
     "sharp": "^0.32.6",
     "util": "^0.12.5",
-    "winston-loggly-bulk": "^3.2.1",
     "winston": "3.3.3",
-    "@dabh/diagnostics": "2.0.2"
+    "winston-loggly-bulk": "^3.2.1"
   },
   "devDependencies": {
     "js-file-download": "^0.4.12",

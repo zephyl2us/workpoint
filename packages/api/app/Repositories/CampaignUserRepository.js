@@ -81,11 +81,12 @@ class CampaignUserRepository {
       'actor_user_id',
     ]))
 
-    console.log(campaignUser)
+    // console.log(campaignUser)
     
     if (await campaignUser.save()) {
       await Cache.forget(`campaign-user:${campaignUser.id}`)
       Pusher.trigger(`campaign-user`, 'update', campaignUser)
+      Pusher.trigger(`campaign-user.${campaignUser.id}`, 'update', campaignUser)
       return campaignUser
     }
 

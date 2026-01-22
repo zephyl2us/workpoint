@@ -29,6 +29,166 @@ class KritController {
 	// 	return 'Bull Test'
 	// }
 
+	async sendSms({ request, response }) {
+		const SmsRepository = make('App/Repositories/SmsRepository')
+
+		const from = 'ONE'
+		const phone = '+66829353103'
+		const message = 'ONE ติดต่อย้ายข้อมูลไปยังระบบใหม่ได้ที่ LINE ID : @one.transfer'
+		const driver = 'clicksend'
+
+		await SmsRepository.send(from, phone, message, driver)
+	}
+
+	// async sendSms({ request, response }) {
+	// 	const rp = require('request-promise')
+
+  //   const { phone, message } = request.only(['phone', 'message'])
+
+  //   if (!phone || !message) {
+  //     return response.status(400).json({
+  //       status: 'error',
+  //       message: 'กรุณาระบุ phone และ message'
+  //     })
+  //   }
+
+  //   const username = Env.get('CLICKSEND_USERNAME') || 'admin@pn1981.com'
+  //   const apiKey = Env.get('CLICKSEND_API_KEY') || '0AFD21FA-14C8-B495-59BE-75C9D51F9790'
+
+  //   // สร้าง Authorization Header (Basic Auth)
+  //   const authString = Buffer.from(`${username}:${apiKey}`).toString('base64')
+
+  //   // กำหนด Options สำหรับ request-promise
+  //   const options = {
+  //     method: 'POST',
+  //     uri: 'https://rest.clicksend.com/v3/sms/send',
+  //     headers: {
+  //       'Authorization': `Basic ${authString}`,
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: {
+  //       messages: [
+  //         {
+  //           to: phone,
+  //           body: message,
+  //           source: 'adonis-app'
+  //         }
+  //       ]
+  //     },
+  //     json: true // สำคัญ: ตัวนี้จะช่วย parse body เป็น JSON ให้เราอัตโนมัติทั้งขาไปและขากลับ
+  //   }
+
+  //   try {
+  //     // ยิง Request
+  //     const result = await rp(options)
+      
+  //     return response.status(200).json({
+  //       status: 'success',
+  //       data: result
+  //     })
+
+  //   } catch (error) {
+  //     // request-promise จะ throw error ถ้า status code ไม่ใช่ 2xx
+  //     console.error('SMS Error:', error.error || error.message)
+      
+  //     return response.status(500).json({
+  //       status: 'error',
+  //       message: 'ไม่สามารถส่งข้อความได้',
+  //       details: error.error || error.message
+  //     })
+  //   }
+  // }
+
+// 	async sendSms ({ request, response }) {
+// 		const rp = require('request-promise')
+// // 1. กำหนดค่า Config
+//     const url = 'https://102.129.229.248/api/send_sms'
+//     const username = 'oneadmin'
+//     const password = 'Din@Star!2026#'
+//     const payload = { key: 'value', data: 'example' } // ข้อมูล JSON
+
+//     // 2. สร้าง Cookie Jar (เทียบเท่ากับ -c และ -b)
+//     // การประกาศแบบนี้จะช่วยเก็บ Cookie ไว้ใน memory เพื่อใช้ใน Request ถัดๆ ไปได้
+//     const cookieJar = rp.jar()
+
+//     // 3. ตั้งค่า Options
+//     const options = {
+//       method: 'POST',           // เหมือน -X POST
+//       uri: url,                 // เหมือน "${url}"
+//       body: payload,            // เหมือน -d "${json}"
+//       json: true,               // เหมือน -H "Content-Type: application/json"
+//                                 // และช่วยแปลง response กลับเป็น json ให้ด้วย
+      
+//       // เหมือน --anyauth -u user:pass
+//       auth: {
+//         user: username,
+//         pass: password,
+//         // sendImmediately: false จะช่วยจำลอง --anyauth ได้ดีขึ้น 
+//         // โดยรอให้ Server ตอบ 401 Challenge มาก่อนค่อยส่ง Auth Type ที่ถูกต้องกลับไป
+//         sendImmediately: false 
+//       },
+
+//       // เหมือน -k (Insecure SSL)
+//       rejectUnauthorized: false,
+
+//       // ใส่ Cookie Jar เพื่อจัดการ Session
+//       // jar: cookieJar, 
+      
+// 			forever: false,  // ปิด Keep-Alive
+//       jar: false,      // ปิด Cookie Jar
+//       headers: {
+//         'Connection': 'close', // สั่งปิด Connection ทันทีเมื่อจบงาน
+//         'Cache-Control': 'no-cache' // ห้าม Cache
+//       },
+			
+//       // (Optional) ถ้าต้องการดู Header ขาตอบกลับด้วย ให้เปิดตัวนี้
+//       resolveWithFullResponse: true 
+//     }
+
+//     try {
+//       // 4. ยิง Request
+//       const result = await rp(options)
+      
+//       // ถ้าเปิด resolveWithFullResponse ไว้ ข้อมูลจริงจะอยู่ที่ .body
+//       console.log('Response Body:', result.body)
+      
+//       // Cookie ที่ Server ส่งมาจะถูกเก็บใน cookieJar อัตโนมัติ
+//       // ถ้าอยากดู Cookie ที่ได้มา:
+//       console.log('Saved Cookies:', cookieJar.getCookies(url))
+
+//       return result.body
+
+//     } catch (error) {
+//       console.error('Error:', error.message)
+//       // กรณี 4xx, 5xx request-promise จะ throw error
+//       // สามารถดึง body error ได้จาก error.response.body
+//       if (error.response) {
+//         return error.response.body
+//       }
+//       return { status: 'error', message: error.message }
+//     }
+//   }
+
+	async vonage ({ request, response }) {
+		const Nexmo = require('nexmo'); // เปลี่ยนชื่อ library
+		const nexmo = new Nexmo({       // เปลี่ยนตัวแปร instance
+			apiKey: "API_KEY",
+			apiSecret: "API_SECRET"
+		});
+
+		const from = "Vonage APIs"
+		const to = "447473331625"
+		const text = 'A text message sent using the Vonage SMS API'
+
+		async function sendSMS() {
+				await nexmo.message.sendSms({to, from, text})
+						.then(resp => { console.log('Message sent successfully'); console.log(resp); })
+						.catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
+		}
+
+		sendSMS();
+	}
+
 	async syncOneUser ({ request, response }) {
 
     const pageSize = 5000

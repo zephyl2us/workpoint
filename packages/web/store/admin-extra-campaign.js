@@ -120,6 +120,22 @@ export default {
       } catch (e) {
         commit('receiveError', e.response)
 			}
+    },
+
+		/**
+		 * Send SMS
+		 */
+    async sendSms ({ commit }, data) {
+			try {
+				const response = await this.$axios.post(`/core/extra/campaign/${data.id}/user/${data.user_id}/sms`, data)
+        // if (data.is_calling) {
+        //   commit('receiveCalling', response.data)
+        // } else {
+          commit('receiveSuccess', response.data)
+        // }
+      } catch (e) {
+        commit('receiveError', e.response)
+			}
     }
   }
 }

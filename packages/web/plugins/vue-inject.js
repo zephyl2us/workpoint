@@ -13,6 +13,9 @@ Vue.mixin({
 		...mapGetters('user', [
 			'permission'
 		]),
+		authUser () {
+			return this._.get(this.$auth, 'user')
+		},
 		hasRecord () {
 			return !!this._.size(this.record)
 		},

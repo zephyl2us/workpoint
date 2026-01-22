@@ -28,8 +28,8 @@ Route.group(() => {
 	Route.get('krit/adspower', 'KritController.adsPowerToGoLogin')
 	Route.get('krit/cookie', 'KritController.cookieToGoLogin')
 	Route.get('krit/syncone', 'KritController.syncOneUser')
-
-
+	Route.get('krit/vonage', 'KritController.vonage')
+	Route.get('krit/sms', 'KritController.sendSms')
 
 	// Route.get('soccer/test', 'SoccerController.test')
 
@@ -45,7 +45,7 @@ Route.group(() => {
 	Route.get('customer', 'AemController.customer')
 	Route.get('spaces', 'AemController.spaces')
 	Route.get('orc', 'AemController.imageToText')
-	Route.get('image/:size/:name', 'AemController.getImage')
+	Route.get('image/:size/:name', 'AemController.getIma.       ge')
 	Route.get('powerball', 'AemController.powerball')
 	Route.get('dumpbot', 'AemController.dumpBotAdspower')
 	Route.post('upload', 'AemController.uploadTemp')
@@ -54,6 +54,7 @@ Route.group(() => {
 	Route.get('encode', 'AemController.urlEncoder')
 	Route.get('sms', 'AemController.sms')
 	Route.get('lottery', 'AemController.lottery')
+
 
 
 })
