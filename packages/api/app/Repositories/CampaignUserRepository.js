@@ -39,7 +39,7 @@ class CampaignUserRepository {
 	}
 
 	async findBy(field, value) {
-		return await this.CampaignUser.findByOrFail(field, value)
+		return await this.CampaignUser.findBy(field, value)
 	}
 
   async create(data) {

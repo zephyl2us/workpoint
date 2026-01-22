@@ -44,6 +44,7 @@ class CampaignLottoone {
 				// console.log(record.one_user_id)
 
 				const user = await CampaignUserRepository.findBy('mobile', record.mobile)
+				// console.log(user)
 
 				if (!user) {
 					await CampaignUserRepository.create({
