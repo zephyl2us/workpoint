@@ -175,7 +175,7 @@ export default {
       return 'text-muted'
     },
     canSendSms () {
-      return !this._.includes(['waiting', 'calling'], this.user.status)
+      return !this._.includes(['waiting', 'calling'], this.user.status) && (this.hasPermission('extra.campaign.create') || this._.eq(this.user.actor_user_id, this.authUser.id))
     }
   },
   watch: {
