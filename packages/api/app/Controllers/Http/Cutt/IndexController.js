@@ -52,6 +52,19 @@ class IndexController {
       return response.status(301).redirect(url)
     }
 
+    if (_.eq(requestUrl, '4SXfET8E9o')) {
+      const clientData = await this.getClientData(request)
+
+      const dataLogs = {
+        title: 'Cutt',
+        path: 'app/Cutt',
+        channel: 'kue',
+        message: `Test Access: `,
+        data: { clientData },
+      }
+      LogRepository.fire(dataLogs)
+    }
+
     return view.render('cutt.landing')
   }
 
