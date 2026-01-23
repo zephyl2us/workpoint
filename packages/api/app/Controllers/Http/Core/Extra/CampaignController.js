@@ -338,8 +338,9 @@ class CampaignController {
 			status: 'success',
 			code: 'campaign.user_updated',
 			// record: updated,
-			url: url,
-			options: options
+			// url: url,
+			// options: options
+			response: rp
 		})
 	}
 
