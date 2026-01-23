@@ -85,7 +85,7 @@ class LotteryResultRequestRepository {
     return result
   }
   async requestHuay (date) {
-    const url = `https://www.huay.com/api/v1/public/lottery/list-round-result?round_date=${date}`
+    const url = `https://www.huay7bet.com/api/v1/public/lottery/list-round-result?round_date=${date}`
 
     // console.log(url)
 
