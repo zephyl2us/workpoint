@@ -16,7 +16,15 @@ class AppInit {
 			return
 		}
 
-		const ip = request.header('cf-connecting-ip') || request.ip()
+		// const ip = request.header('cf-connecting-ip') || request.ip()
+    // request.clientIp = ip
+
+    const cfIp = headers['cf-connecting-ip']
+    const xff = headers['x-forwarded-for']
+    const realIp = headers['x-real-ip']
+
+    const ipFromXff = xff ? String(xff).split(',')[0].trim() : null
+    const ip = cfIp || ipFromXff || realIp || request.ip()
     request.clientIp = ip
 
     await next()

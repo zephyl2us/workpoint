@@ -30,7 +30,6 @@ class IndexController {
       // 'fJqpFxLvZK'
       // 'btJUzHmEkV'
       // 'gRRZj2esDv'
-      // '4SXfET8E9o'
     }
 
     // console.log(requestUrl)
