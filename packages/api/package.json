@@ -60,6 +60,7 @@
     "ffmpeg": "0.0.4",
     "ffprobe": "^1.1.2",
     "fluent-ffmpeg": "^2.1.2",
+    "geoip-lite": "^1.4.10",
     "langdetect": "^0.2.1",
     "lodash": "^4.17.19",
     "lodash-inflection": "^1.5.0",
@@ -79,6 +80,7 @@
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
     "sharp": "^0.32.6",
+    "ua-parser-js": "^2.0.8",
     "util": "^0.12.5",
     "winston": "3.3.3",
     "winston-loggly-bulk": "^3.2.1"

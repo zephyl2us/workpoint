@@ -22,6 +22,11 @@ require('./routes/example')
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
+const specificDomains = ['cutt.lab', 'cutt.is']
+specificDomains.forEach(domainName => {
+  Route.get('*', 'Cutt/IndexController.index')
+})
+
 // Route.group(() => {
   Route.on('/').render('welcome')
   Route.on('/example/player').render('example.player')
