@@ -272,12 +272,12 @@ class CampaignController {
       })
 		}
 
-    const data = {
-      mobile: user.mobile,
-    }
+    // const data = {
+    //   mobile: user.mobile,
+    // }
 
     const timestamp = moment().unix()
-    const url = `${this.checkerEndpoint}?timestamp=${timestamp}`
+    const url = `${this.checkerEndpoint}?mobile=${user.mobile}&timestamp=${timestamp}`
     const options = {
       method: 'GET',
       uri: url,
@@ -286,7 +286,7 @@ class CampaignController {
         'service-secret': `${this.apiKey}`,
         'X-Domain': this.domain
       },
-      body: data
+      // body: data
     }
 
     let rp = await this.request(options)
