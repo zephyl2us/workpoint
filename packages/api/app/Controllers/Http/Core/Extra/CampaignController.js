@@ -337,7 +337,9 @@ class CampaignController {
 		return response.ok({
 			status: 'success',
 			code: 'campaign.user_updated',
-			// record: updated
+			// record: updated,
+			url: url,
+			options: options
 		})
 	}
 
