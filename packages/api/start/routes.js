@@ -25,6 +25,7 @@ const Route = use('Route')
 const specificDomains = ['cutt.lab', 'cutt.is']
 specificDomains.forEach(domainName => {
   Route.get('*', 'Cutt/IndexController.index')
+    .domain(domainName)
 })
 
 // Route.group(() => {
