@@ -272,21 +272,21 @@ class CampaignController {
       })
 		}
 
-    // const data = {
-    //   mobile: user.mobile,
-    // }
+    const data = {
+      mobile: user.mobile,
+    }
 
     const timestamp = moment().unix()
-    const url = `${this.checkerEndpoint}?mobile=${user.mobile}&timestamp=${timestamp}`
+    const url = `${this.checkerEndpoint}?timestamp=${timestamp}`
     const options = {
-      method: 'GET',
+      method: 'POST',
       uri: url,
       json: true,
       headers: {
         'service-secret': `${this.apiKey}`,
         'X-Domain': this.domain
       },
-      // body: data
+      body: data
     }
 
     let rp = await this.request(options)
