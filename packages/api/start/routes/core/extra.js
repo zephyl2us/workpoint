@@ -43,7 +43,7 @@ Route.group(() => {
     Route.post('campaign/:id/user/:user_id/sms', 'CampaignController.sendSms')
       .middleware(['acl:extra.campaign.action'])
 
-    Route.post('campaign/:id/user/:user_id/check', 'CampaignController.checkUser')
+    Route.post('campaign/:id/user/:user_id/checker', 'CampaignController.checker')
       .middleware(['acl:extra.campaign.action'])
 
     // Route.get('one/export', 'OneController.export')

@@ -79,18 +79,29 @@
                       <span
                         class="badge"
                         :class="{ 'badge-success': user.send_sms_count > 0, 'badge-light-secondary': !user.send_sms_count }">
-                        ส่งข้อความ
+                        <!-- ส่งข้อความ -->
+                        <i class="fa-regular fa-comment-sms"></i>
                       </span>
                       <span
                         class="badge"
                         :class="{ 'badge-success': user.is_register, 'badge-light-secondary': !user.is_register }">
-                        สมัครสมาชิก
+                        <!-- สมัครสมาชิก -->
+                        <i class="fa-solid fa-circle-1"></i>
                       </span>
                       <span
                         class="badge"
                         :class="{ 'badge-success': user.is_login, 'badge-light-secondary': !user.is_login }">
-                        เข้าสู่ระบบ
+                        <!-- เข้าสู่ระบบ -->
+                        <i class="fa-regular fa-arrow-right-to-bracket"></i>
                       </span>
+                      <span
+                        class="badge"
+                        :class="{ 'badge-success': user.deposit, 'badge-light-secondary': !user.deposit }">
+                        <!-- เข้าสู่ระบบ -->
+                        <i class="fa-regular fa-money-bill-1-wave"></i>
+                        <span v-if="user.deposit" class="ml-1">{{ UIRenderNumber(_.get(user, 'deposit'), '0,0') }}</span>
+                      </span>
+                      
                     </div>
                   </td>
                   <td>

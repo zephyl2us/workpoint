@@ -80,9 +80,14 @@
           </div>
           <audio ref="remoteAudio" autoplay style="display: none;"></audio>
         </div>
-        <div v-if="canSendSms" class="modal-body border-top">
+        <div v-if="canSendSms" class="modal-body d-flex border-top">
 
-          <button type="button" class="btn btn-success mx-auto" @click="onSendSms">
+          <button type="button" class="btn btn-secondary" @click="onChecker">
+            <i class="fa-regular fa-arrow-rotate-right mr-1"></i>
+            <span class="">อัพเดทข้อมูล</span>
+          </button>
+
+          <button type="button" class="btn btn-success ml-auto" @click="onSendSms">
             <i class="fa-regular fa-message-lines mr-1"></i>
             <span class="">ส่งข้อความ</span>
           </button>
@@ -274,7 +279,8 @@ export default {
   methods: {
     ...mapActions('admin-extra-campaign', [
       'updateStatus',
-      'sendSms'
+      'sendSms',
+      'checker'
     ]),
 
     setDefault () {
@@ -318,9 +324,25 @@ export default {
         message: `${name} สามารถติดต่อย้ายข้อมูลไปยังระบบใหม่พร้อมรับโปรโมชั่นได้ที่ ไลน์ไอดี : @one.transfer`
       }
 
-      console.log(input)
+      // console.log(input)
 
       this.sendSms(input)
+
+    }, 5000, { leading: true }),
+
+    onChecker: _.debounce(function () {
+      this.submitting()
+      // Submit Logic...
+
+      const input = {
+        id: this._.get(this.user, 'campaign_id'),
+        user_id: this._.get(this.user, 'id'),
+        mobile: this.user.mobile,
+      }
+
+      // console.log(input)
+
+      this.checker(input)
 
     }, 5000, { leading: true }),
 

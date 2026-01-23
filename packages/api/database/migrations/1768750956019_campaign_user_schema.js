@@ -18,6 +18,7 @@ class CampaignUserSchema extends Schema {
       
       table.tinyint('is_register')
       table.tinyint('is_login')
+      table.integer('deposit').unsigned().default(0)
 
       table.text('payload')
       

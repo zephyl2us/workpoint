@@ -11,6 +11,7 @@ const Pusher = use('Pusher')
 const Helper = use('App/Helper')
 const ExtOneUser = use('App/Models/ExtOneUser')
 const CampaignLottooneJob = use('App/Jobs/CampaignLottoone')
+const rp = use('request-promise')
 
 class CampaignController {
 
@@ -26,6 +27,11 @@ class CampaignController {
     this.CampaignRepository = CampaignRepository
     this.CampaignUserRepository = CampaignUserRepository
 		this.SmsRepository = SmsRepository
+
+    this.domain = Helper.isDevMode() ? `backend.lotter.lab` : `lotter.tech`
+    this.api = Helper.isDevMode() ? `http://127.0.0.1:8888` : `https://lotter.tech`
+    this.checkerEndpoint = `${this.api}/service/transition/checker`
+    this.apiKey = `YPWBbZ0NOnqvJNWhfHCw5jCaL1pNwoB9`
   }
 
   async index ({ request, response }) {
@@ -231,6 +237,110 @@ class CampaignController {
 		})
 	}
 
+	async checker ({ auth, request, response, params }) {
+		const authUser = auth.user
+		const actorId = authUser.id
+
+		const userId = params.user_id
+		const user = await this.CampaignUserRepository.findBy('id', userId)
+
+    if(!_.get(user, 'id')) {
+      return response.status(400).json({
+        code: 'query.not_found',
+        message: 'User not found'
+      })
+    }
+
+		if (user.actor_user_id && !_.eq(actorId, user.actor_user_id)) {
+      return response.status(400).json({
+        code: 'campaign.assigned_to_another_agent',
+        message: 'Member is assigned to another agent'
+      })
+		}
+
+		if (!_.eq(user.status, 'answered')) {
+      return response.status(400).json({
+        code: 'campaign.not_answered',
+        message: 'Member is not answered'
+      })
+		}
+
+		if (!user.actor_user_id) {
+      return response.status(400).json({
+        code: 'campaign.not_assign',
+        message: 'Member is not assign'
+      })
+		}
+
+    const data = {
+      mobile: user.mobile,
+    }
+
+    const timestamp = moment().unix()
+    const url = `${this.checkerEndpoint}?timestamp=${timestamp}`
+    const options = {
+      method: 'GET',
+      uri: url,
+      json: true,
+      headers: {
+        'service-secret': `${this.apiKey}`,
+        'X-Domain': this.domain
+      },
+      body: data
+    }
+
+    let rp = await this.request(options)
+
+		// console.log(rp)
+
+		const isRegister = _.get(rp, 'is_register')
+		const isLogin = _.get(rp, 'is_login')
+		const deposit = _.get(rp, 'deposit')
+
+		// if ()
+
+    const ExtOneUser = use('App/Models/ExtOneUser')
+		let query = ExtOneUser.query()
+
+		query.where('role', 'member')
+		query.where('mobile', user.mobile)
+
+		const oneUser = await query.first()
+
+		const oneUserStatus = oneUser?.status
+		if (oneUser && oneUserStatus == 'active' && isRegister) {
+			oneUser.status = 'transfered'
+			oneUser.save()
+		}
+
+
+		let isUpdate = false
+		const updateData = {}
+
+		if (!_.eq(isRegister, user.is_register)) {
+			updateData.is_register = isRegister
+			isUpdate = true
+		}
+		if (!_.eq(isLogin, user.is_login)) {
+			updateData.is_login = isLogin
+			isUpdate = true
+		}
+		if (!_.eq(deposit, user.deposit)) {
+			updateData.deposit = deposit
+			isUpdate = true
+		}
+
+		if (_.has(updateData, 'is_register') || _.has(updateData, 'is_login') || _.has(updateData, 'deposit')) {
+			await this.CampaignUserRepository.update(user, updateData)
+		}
+
+		return response.ok({
+			status: 'success',
+			code: 'campaign.user_updated',
+			// record: updated
+		})
+	}
+
 	async one ({ request, response }) {
 		const currentPage = request.input('page', 1)
 		const agentIds = request.input('agent_ids') || null
@@ -360,6 +470,18 @@ class CampaignController {
 		}
 		
 		return query
+	}
+
+  async request (options) {
+    const result = await rp(options)
+    .then(function (response) {
+      return response
+    })
+    .catch(function (error) {
+      return error
+    })
+    
+    return result
 	}
 }
 

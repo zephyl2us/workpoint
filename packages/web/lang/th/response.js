@@ -12,7 +12,9 @@ export default {
     password_changed: 'เปลี่ยนรหัสผ่านสำเร็จ',
     campaign: {
       created: 'สร้างแคมเปญสำเร็จ',
-      status_updated: 'อัพเดทสถานะสำเร็จ'
+      status_updated: 'อัพเดทสถานะสำเร็จ',
+      sms_sended: 'ส่งข้อความสำเร็จ',
+      user_updated: 'อัพเดทข้อมูลล่าสุดสำเร็จ'
     }
   },
   error: {
