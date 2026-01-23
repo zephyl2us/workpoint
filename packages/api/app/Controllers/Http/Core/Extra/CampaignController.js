@@ -340,7 +340,8 @@ class CampaignController {
 			// record: updated,
 			// url: url,
 			// options: options
-			// response: rp
+			response: rp,
+			update_data: updateData
 		})
 	}
 
