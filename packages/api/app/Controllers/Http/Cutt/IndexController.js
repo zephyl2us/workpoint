@@ -77,6 +77,7 @@ class IndexController {
     const geo = geoip.lookup(ip) || {}
 
     const clientData = {
+      user_agent: uaString,
       device_info: {
         browser: `${uaResult.browser.name} ${uaResult.browser.version}`,
         os: `${uaResult.os.name} ${uaResult.os.version}`,
