@@ -54,6 +54,7 @@ class CampaignUserRepository {
       'send_sms_count',
       'is_register',
       'is_login',
+      'deposit',
       'payload',
       'actor_user_id',
     ]))
