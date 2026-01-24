@@ -1,5 +1,6 @@
 'use strict'
 
+const { sum } = require('lodash')
 const md5 = require('md5')
 
 const _ = use('lodash')
@@ -8,6 +9,7 @@ const Env = use('Env')
 const Bull = use('Bull')
 const Redis = use('Redis')
 const Pusher = use('Pusher')
+const Database = use('Database')
 const Helper = use('App/Helper')
 const ExtOneUser = use('App/Models/ExtOneUser')
 const CampaignLottooneJob = use('App/Jobs/CampaignLottoone')
@@ -20,13 +22,15 @@ class CampaignController {
 			'App/Repositories/CampaignRepository',
 			'App/Repositories/CampaignUserRepository',
 			'App/Repositories/SmsRepository',
+			'App/Repositories/UserRepository',
 		]
 	}
 
-  constructor(CampaignRepository, CampaignUserRepository, SmsRepository) {
+  constructor(CampaignRepository, CampaignUserRepository, SmsRepository, UserRepository) {
     this.CampaignRepository = CampaignRepository
     this.CampaignUserRepository = CampaignUserRepository
 		this.SmsRepository = SmsRepository
+		this.UserRepository = UserRepository
 
     this.domain = Helper.isDevMode() ? `backend.lotter.lab` : `lotter.tech`
     this.api = Helper.isDevMode() ? `http://127.0.0.1:8888` : `https://lotter.tech`
@@ -51,18 +55,89 @@ class CampaignController {
 		const records = _.get(campaigns.toJSON(), 'data')
 		const pagination = Helper.pager(campaigns)
 
+		const campaignIds = records.map(record => record.id)
+
+		// let summaries = await Database.raw(`SELECT actor_user_id, COUNT(*) as total_all, SUM(CASE WHEN status = 'active' THEN 1 ELSE 0 END) as total_active, SUM(CASE WHEN status = 'paused' THEN 1 ELSE 0 END) as total_paused, SUM(CASE WHEN status = 'draft'  THEN 1 ELSE 0 END) as total_draft FROM campaign_users WHERE campaign_id = ? GROUP BY actor_user_id;`, [id])
+		let summaries = await Database.raw(`
+		SELECT 
+			campaign_id,
+
+			COUNT(*) as total_user,
+			SUM(CASE WHEN status = 'waiting' THEN 1 ELSE 0 END) as total_waiting,
+			SUM(CASE WHEN status = 'calling' THEN 1 ELSE 0 END) as total_calling,
+			SUM(CASE WHEN status = 'answered' THEN 1 ELSE 0 END) as total_answered,
+			SUM(CASE WHEN status = 'no_answer' THEN 1 ELSE 0 END) as total_no_answer,
+			SUM(CASE WHEN status = 'rejected' THEN 1 ELSE 0 END) as total_rejected,
+			SUM(CASE WHEN status = 'unreachable' THEN 1 ELSE 0 END) as total_unreachable,
+			SUM(is_register) as total_registered,
+			SUM(is_login) as total_login,
+			SUM(CASE WHEN deposit > 0 THEN 1 ELSE 0 END) as total_depositors,
+			SUM(deposit) as total_deposit_amount
+		
+		FROM campaign_users
+		WHERE campaign_id IN (?)
+		GROUP BY campaign_id;
+		`, [campaignIds])
+
+		'waiting','calling','answered','no_answer','rejected','unreachable'
+
+		summaries = _.get(summaries, '0')
+		const summariesMap = _.keyBy(summaries.map(row => ({
+      ...row,
+      total_user: Number(row.total_user),
+      total_calling: Number(row.total_calling),
+      total_waiting: Number(row.total_waiting),
+      total_answered: Number(row.total_answered),
+      total_no_answer: Number(row.total_no_answer),
+      total_rejected: Number(row.total_rejected),
+      total_unreachable: Number(row.total_unreachable),
+      total_login: Number(row.total_login),
+      total_registered: Number(row.total_registered),
+      total_depositors: Number(row.total_depositors),
+      total_deposit_amount: Number(row.total_deposit_amount || 0)
+    })), 'campaign_id');
+
+    const defaultStats = {
+      total_user: 0,
+      total_calling: 0,
+      total_waiting: 0,
+      total_answered: 0,
+      total_no_answer: 0,
+      total_rejected: 0,
+      total_unreachable: 0,
+      total_login: 0,
+      total_registered: 0,
+      total_depositors: 0,
+      total_deposit_amount: 0
+    };
+
+    const mappedRecords = records.map(campaign => {
+      const stats = summariesMap[campaign.id] || defaultStats; 
+      
+      return {
+        ...campaign,
+        stats: stats
+      }
+    });
+
+		// console.log(`summaries`, summaries);
+
     return response.status(200).json({
-      records: records,
+      records: mappedRecords,
       pagination: pagination,
     })
   }
 
-  async view ({ request, response, params }) {
+  async view ({ auth, request, response, params }) {
+		const authUser = auth.user
+		const actorId = authUser.id
+
 		const id = params.id
 		const currentPage = request.input('page', 1)
+		const actor = request.input('actor') || 'all'
 
 		const filter = {
-			id: id
+			id: id,
 		}
 
 		let campaign = await this.CampaignRepository
@@ -83,9 +158,25 @@ class CampaignController {
 			// status: status
 		}
 		
-    let users = await this.CampaignUserRepository
+    const permissions = await this.UserRepository.permission(authUser)
+    const hasPermission = !!_.get(permissions, 'extra.campaign.create')
+		// console.log(`hasPermission`, hasPermission)
+
+		let query = this.CampaignUserRepository
 			.browse({ filter: userFilter })
-			.paginate(currentPage)
+
+		
+		if (actor === 'me') {
+			query.where('actor_user_id', actorId)
+			// _.set(userFilter, 'actor_user_id', actorId)
+		} else if (hasPermission) {
+			// console.log(`hasPermission`, hasPermission)
+			query.whereIn('actor_user_id', [null, actorId])
+			// _.set(userFilter, 'actor_user_id', null)
+		}
+
+
+    let users = await query.paginate(currentPage)
 
 		const records = _.get(users.toJSON(), 'data')
 		const pagination = Helper.pager(users)
@@ -94,6 +185,85 @@ class CampaignController {
       record: campaign,
       users: records,
       pagination: pagination
+    })
+  }
+
+  async summary ({ auth, request, response, params }) {
+		const authUser = auth.user
+		const actorId = authUser.id
+
+		const id = params.id
+
+		const filter = {
+			id: id,
+		}
+
+		let campaign = await this.CampaignRepository
+			.browse({ filter: filter })
+			.first()
+
+    if(!campaign) {
+      return response.status(404).json({
+        message: 'request.campaign.notfound'
+      })
+    }
+
+		campaign = campaign.toJSON()
+
+		// let summaries = await Database.raw(`SELECT actor_user_id, COUNT(*) as total_all, SUM(CASE WHEN status = 'active' THEN 1 ELSE 0 END) as total_active, SUM(CASE WHEN status = 'paused' THEN 1 ELSE 0 END) as total_paused, SUM(CASE WHEN status = 'draft'  THEN 1 ELSE 0 END) as total_draft FROM campaign_users WHERE campaign_id = ? GROUP BY actor_user_id;`, [id])
+		let summaries = await Database.raw(`
+		SELECT 
+			actor_user_id,
+			
+			COUNT(*) as total_user,
+			SUM(CASE WHEN status = 'waiting' THEN 1 ELSE 0 END) as total_waiting,
+			SUM(CASE WHEN status = 'calling' THEN 1 ELSE 0 END) as total_calling,
+			SUM(CASE WHEN status = 'answered' THEN 1 ELSE 0 END) as total_answered,
+			SUM(CASE WHEN status = 'no_answer' THEN 1 ELSE 0 END) as total_no_answer,
+			SUM(CASE WHEN status = 'rejected' THEN 1 ELSE 0 END) as total_rejected,
+			SUM(CASE WHEN status = 'unreachable' THEN 1 ELSE 0 END) as total_unreachable,
+			SUM(is_register) as total_registered,
+			SUM(is_login) as total_login,
+			SUM(CASE WHEN deposit > 0 THEN 1 ELSE 0 END) as total_depositors,
+			SUM(deposit) as total_deposit_amount
+		
+		FROM campaign_users
+		WHERE campaign_id = ?
+		GROUP BY actor_user_id;
+		`, [id])
+
+		'waiting','calling','answered','no_answer','rejected','unreachable'
+
+		summaries = _.get(summaries, '0')
+		summaries = summaries.map(row => ({
+			...row,
+			total_user: Number(row.total_user),
+			total_calling: Number(row.total_calling),
+			total_waiting: Number(row.total_waiting),
+			total_answered: Number(row.total_answered),
+			total_no_answer: Number(row.total_no_answer),
+			total_rejected: Number(row.total_rejected),
+			total_unreachable: Number(row.total_unreachable),
+			total_login: +row.total_login,
+			total_registered: +row.total_registered
+		}));
+
+		const actorIds = summaries.map(summary => summary.actor_user_id).filter(id => id !== null)
+
+		const actorFilter = {
+			ids: actorIds
+		}
+
+    let users = await this.UserRepository
+			.browse({ filter: actorFilter })
+			.fetch()
+
+		users = users.toJSON()
+
+    return response.status(200).json({
+      record: campaign,
+      summaries: summaries,
+			users: users
     })
   }
 

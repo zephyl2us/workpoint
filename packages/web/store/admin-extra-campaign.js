@@ -7,6 +7,8 @@ export default {
     records: [],
     record: {},
     users: [],
+    actors: [],
+    summaries: [],
     pagination: {},
     response: {
       error: {},
@@ -22,6 +24,12 @@ export default {
     },
     users (state) {
       return state.users
+    },
+    actors (state) {
+      return state.actors
+    },
+    summaries (state) {
+      return state.summaries
     },
     pagination (state) {
       return state.pagination
@@ -46,6 +54,13 @@ export default {
       state.record = record
       state.users = users
       state.pagination = pagination
+    },
+    receiveSummary (state, payload) {
+			const { record, summaries, users} = payload
+
+      state.record = record
+      state.summaries = summaries
+      state.actors = users
     },
     receiveUpdateUser (state, payload) {
       const { id } = payload
@@ -101,6 +116,18 @@ export default {
 			try {
 				const response = await this.$axios.get(`/core/extra/campaign/${data.id}?${params}`)
 				commit('receiveRecord', response.data)
+			} catch (e){
+				console.error('CANNOT FIND')
+			}
+		},
+		/**
+		 * Get Campaign Summary
+		 */
+		async getSummary ({ commit }, data) {
+			const params = $.param(data.params)
+			try {
+				const response = await this.$axios.get(`/core/extra/campaign/${data.id}/summary?${params}`)
+				commit('receiveSummary', response.data)
 			} catch (e){
 				console.error('CANNOT FIND')
 			}

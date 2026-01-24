@@ -1,19 +1,13 @@
 <template>
   <div>
     <header class="content-header">
-      <h3 class="header-title">{{ $t(`extra.campaign`) }}</h3>
+      <h3 class="header-title">{{ $t(`extra.campaign`) }} - {{ _.get(record, 'name') }}</h3>
       <div class="header-action">
-        <NuxtLink 
-          v-if="hasPermission('extra.campaign.create')"
-          :to="linkTo('/extra/campaign/create/one')"
-          class="btn btn-primary mr-2">
-          สร้างแคมเปญ
-        </NuxtLink>
       </div>
     </header>
     <div class="app__body">
 
-      <template v-if="hasRecords">
+      <template v-if="hasSummaries">
         <div class="card card-ant-list mb-3">
           <div class="table-responsive">
             <table class="table table-hover mb-0">
@@ -35,49 +29,44 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(record, index) in records" :key="`record-${index}`">
+                <tr v-for="(record, index) in summaries" :key="`record-${index}`">
                   <td>
-                    <div class="mb-0">
-                      <NuxtLink :to="linkTo(`/extra/campaign/${record.id}`)" class="font-numeral">{{ record.id }}</NuxtLink>
-                    </div>
+                    {{ index + 1 }}
                   </td>
                   <td>
                     <div class="mb-0">
-                      <span class="font-weight-bold font-special text-dark">{{ record.name }}</span>
+                      <span class="font-weight-bold font-special text-dark">{{ getActor(record.actor_user_id) }}</span>
                     </div>
                   </td>
                   <td>
-                    <span class="">{{ UIRenderNumber(record.stats.total_user, '0,0') }}</span>
+                    <span class="">{{ UIRenderNumber(record.total_user, '0,0') }}</span>
                   </td>
                   <td>
-                    <span class="">{{ UIRenderNumber(record.stats.total_answered, '0,0') }}</span>
+                    <span class="">{{ UIRenderNumber(record.total_answered, '0,0') }}</span>
                   </td>
                   <td>
-                    <span class="">{{ UIRenderNumber(record.stats.total_no_answer, '0,0') }}</span>
+                    <span class="">{{ UIRenderNumber(record.total_no_answer, '0,0') }}</span>
                   </td>
                   <td>
-                    <span class="">{{ UIRenderNumber(record.stats.total_rejected, '0,0') }}</span>
+                    <span class="">{{ UIRenderNumber(record.total_rejected, '0,0') }}</span>
                   </td>
                   <td>
-                    <span class="">{{ UIRenderNumber(record.stats.total_unreachable, '0,0') }}</span>
+                    <span class="">{{ UIRenderNumber(record.total_unreachable, '0,0') }}</span>
                   </td>
                   <td>
-                    <span class="">{{ UIRenderNumber(record.stats.total_registered, '0,0') }}</span>
+                    <span class="">{{ UIRenderNumber(record.total_registered, '0,0') }}</span>
                   </td>
                   <td>
-                    <span class="">{{ UIRenderNumber(record.stats.total_login, '0,0') }}</span>
+                    <span class="">{{ UIRenderNumber(record.total_login, '0,0') }}</span>
                   </td>
                   <td>
-                    <span class="">{{ UIRenderNumber(record.stats.total_depositors, '0,0') }}</span>
+                    <span class="">{{ UIRenderNumber(record.total_depositors, '0,0') }}</span>
                   </td>
                   <td>
-                    <span class="">{{ UIRenderNumber(record.stats.total_deposit_amount, '0,0') }}</span>
+                    <span class="">{{ UIRenderNumber(record.total_deposit_amount, '0,0') }}</span>
                   </td>
                   <td>
                     <div class="table-action">
-                      <NuxtLink :to="linkTo(`/extra/campaign/${record.id}`)" class="btn btn-sm btn-light-primary">
-                        <i class="fa-regular fa-list-ul"></i>
-                      </NuxtLink>
                     </div>
                   </td>
                 </tr>
@@ -85,8 +74,6 @@
             </table>
           </div>
         </div>
-
-        <Pagination v-if="hasRecords" :pagination="pagination" :on-page-change="handleOnChangePage"></Pagination>
       </template>
     </div>
   </div>
@@ -100,39 +87,68 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 import fetchMixin from '~/mixins/fetch'
 
 export default {
-  name: 'ExtraCampaign',
+  name: 'ArmyAnt',
   components: {},
   mixins: [fetchMixin],
   layout: 'admin',
   props: {},
   data () {
-    return {}
+    return {
+      // date: null,
+      refId: null,
+      filters: {
+        status: undefined,
+        actor: null
+      },
+      showActor: 'all',
+      currentRecord: null,
+      showCampaignUserModal: false,
+    }
   },
   computed: {
     ...mapState('auth', [
       'user'
     ]),
     ...mapGetters('admin-extra-campaign', [
-      'records',
-      'pagination'
+      'record',
+      'summaries',
+      'actors',
+      'responseSuccess',
+      'responseError'
     ]),
+    hasSummaries () {
+      return !!this._.size(this.summaries)
+    },
   },
   watch: {
   },
   created () {},
-  beforeDestroy () {},
+  beforeDestroy () {
+  },
   mounted () {
+    this.refId = this.$route.params.id
   },
   methods: {
     ...mapActions('admin-extra-campaign', [
-      'getCampaigns'
+      'getSummary',
     ]),
     /**
      * Data manager work with api
      */
     async dataManager (params, from = null) {
-      await this.getCampaigns(params)
+      const data = {
+        id: this.$route.params.id,
+        params
+      }
+
+      await this.getSummary(data)
       this.handleAfterLoaded()
+    },
+
+    getActor (actorId) {
+      const actor = this.actors.find(actor => actor.id === actorId) || {}
+      // console.log(actor)
+      return this._.get(actor, 'display_name', '-')
     },
   },
 }

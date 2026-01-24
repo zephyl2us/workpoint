@@ -24,6 +24,9 @@ class CampaignUserSchema extends Schema {
       
       table.integer('actor_user_id').default(null).unsigned().index()
       table.timestamps()
+
+      table.index(['campaign_id', 'status', 'is_register', 'is_login', 'deposit'], 'filter_by_campaign_index')
+      table.index(['campaign_id', 'actor_user_id', 'status', 'is_register', 'is_login', 'deposit'], 'filter_by_actor_index')
     })
   }
 

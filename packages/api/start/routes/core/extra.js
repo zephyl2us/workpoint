@@ -37,6 +37,9 @@ Route.group(() => {
     Route.get('campaign/:id', 'CampaignController.view')
       .middleware(['acl:extra.campaign.view'])
 
+    Route.get('campaign/:id/summary', 'CampaignController.summary')
+      .middleware(['acl:extra.campaign.create'])
+
     Route.patch('campaign/:id/user/:user_id/status', 'CampaignController.updateStatus')
       .middleware(['acl:extra.campaign.action'])
 

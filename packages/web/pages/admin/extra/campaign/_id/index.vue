@@ -3,6 +3,29 @@
     <header class="content-header">
       <h3 class="header-title">{{ $t(`extra.campaign`) }} - {{ _.get(record, 'name') }}</h3>
       <div class="header-action">
+        <NuxtLink 
+          v-if="hasPermission('extra.campaign.create')" 
+          :to="linkTo(`/extra/campaign/${refId}/summary`)"
+          class="btn btn-light-secondary mr-3">
+          <i class="fa-regular fa-file-chart-column mr-1"></i>
+          สรุปแคมเปญ
+        </NuxtLink>
+        <div class="btn-group">
+          <button 
+            type="button" 
+            class="btn" 
+            :class="[addShowActorClass('all')]"
+            @click="onClickShowActorButton('all')">
+            ทั้งหมด
+          </button>
+          <button 
+            type="button" 
+            class="btn" 
+            :class="[addShowActorClass('me')]"
+            @click="onClickShowActorButton('me')">
+            ของฉัน
+          </button>
+        </div>
       </div>
     </header>
     <div class="app__body">
@@ -17,7 +40,7 @@
                   <th style="min-width: 64px;"></th>
                   <th width="100%">ชื่อ</th>
                   <!-- <th style="min-width: 40px;"></th> -->
-                  <th style="min-width: 130px;">เบอร์โทร</th>
+                  <th v-if="hasPermission('extra.campaign.create')" style="min-width: 130px;">เบอร์โทร</th>
                   <th style="min-width: 120px;">เครดิต</th>
                   <th style="min-width: 120px;">สถานะ</th>
                   <th style="min-width: 230px"></th>
@@ -41,7 +64,7 @@
                       <span class="font-weight-bold font-special text-dark">{{ user.first_name }} {{ user.last_name }}</span>
                     </div>
                   </td>
-                  <td>
+                  <td v-if="hasPermission('extra.campaign.create')">
                     <div class="">
                       <span class="font-numeral">{{ user.mobile }}</span>
                     </div>
@@ -80,25 +103,25 @@
                         class="badge"
                         :class="{ 'badge-success': user.send_sms_count > 0, 'badge-light-secondary': !user.send_sms_count }">
                         <!-- ส่งข้อความ -->
-                        <i class="fa-regular fa-comment-sms"></i>
+                        <i class="fa-solid fa-comment-sms"></i>
                       </span>
                       <span
                         class="badge"
                         :class="{ 'badge-success': user.is_register, 'badge-light-secondary': !user.is_register }">
                         <!-- สมัครสมาชิก -->
-                        <i class="fa-solid fa-circle-1"></i>
+                        <i class="fa-solid fa-shuffle"></i>
                       </span>
                       <span
                         class="badge"
                         :class="{ 'badge-success': user.is_login, 'badge-light-secondary': !user.is_login }">
                         <!-- เข้าสู่ระบบ -->
-                        <i class="fa-regular fa-arrow-right-to-bracket"></i>
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i>
                       </span>
                       <span
                         class="badge"
                         :class="{ 'badge-success': user.deposit, 'badge-light-secondary': !user.deposit }">
                         <!-- เข้าสู่ระบบ -->
-                        <i class="fa-regular fa-money-bill-1-wave"></i>
+                        <i class="fa-solid fa-money-bill-1-wave"></i>
                         <span v-if="user.deposit" class="ml-1">{{ UIRenderNumber(_.get(user, 'deposit'), '0,0') }}</span>
                       </span>
                       
@@ -152,9 +175,12 @@ export default {
   data () {
     return {
       // date: null,
+      refId: null,
       filters: {
         status: undefined,
+        actor: null
       },
+      showActor: 'all',
       currentRecord: null,
       showCampaignUserModal: false,
     }
@@ -175,12 +201,19 @@ export default {
     },
   },
   watch: {
+    showActor: {
+      handler (value) {
+        this.filters.actor = value
+        this.handleFilterSubmit()
+      }
+    },
   },
   created () {},
   beforeDestroy () {
     this.$pusher.unsubscribe(`campaign-user`)
   },
   mounted () {
+    this.refId = this.$route.params.id
     const channel = this.$pusher.subscribe(`campaign-user`)
 
     // channel.bind('bot-create', (data) => {
@@ -230,6 +263,14 @@ export default {
 
       return this._.get(classes, record.status) || 'badge-light-secondary'
     },
+
+    addShowActorClass (value) {
+      return this._.eq(this.showActor, value) ? 'btn-primary' : 'btn-light-secondary'
+    },
+
+    onClickShowActorButton (value) {
+      this.showActor = value
+    }
   },
 }
 </script>

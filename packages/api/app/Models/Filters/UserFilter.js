@@ -15,6 +15,10 @@ class UserFilter extends ModelFilter {
     return this.where('id', value)
   }
 
+  ids (value) {
+    return this.where('id', value)
+  }
+
   group (value) {
     return this.where('group', value)
   }
