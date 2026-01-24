@@ -36,7 +36,7 @@ class IndexController {
         is_enable: false
       },
       'aK9pX2': { // ติดต่อทีมงาน
-        link: 'https://tinyurl.com/v26k6f49',
+        link: 'https://tinyurl.com/v26k6f51',
         is_enable: true
       },
       // 'thG7fbSThS'
