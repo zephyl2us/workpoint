@@ -249,19 +249,23 @@ class CampaignController {
 			total_unreachable: Number(row.total_unreachable),
 			total_login: +row.total_login,
 			total_registered: +row.total_registered
-		}));
+		})).filter(row => row.actor_user_id !== null);
 
 		const actorIds = summaries.map(summary => summary.actor_user_id).filter(id => id !== null)
 
-		const actorFilter = {
-			ids: actorIds
+		let users = []
+
+		if(actorIds.length > 0) {
+			const actorFilter = {
+				ids: actorIds
+			}
+
+	    users = await this.UserRepository
+				.browse({ filter: actorFilter })
+				.fetch()
+
+			users = users.toJSON()
 		}
-
-    let users = await this.UserRepository
-			.browse({ filter: actorFilter })
-			.fetch()
-
-		users = users.toJSON()
 
     return response.status(200).json({
       record: campaign,
