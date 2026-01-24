@@ -23,7 +23,22 @@ class IndexController {
     const requestUrl = _.replace(request.url(), '/', '')
 
     const redirectUrl = {
-      'fGGEq9V7k1': `https://bit.ly/49DFbEN`, // LINE @
+      '7rB3tW': { // ย้ายระบบ
+        link: 'https://tinyurl.com/464hwrhf',
+        is_enable: false
+      },
+      'Nc4vJ0': { // ระบบใหม่
+        link: 'https://tinyurl.com/5n8jr4j3',
+        is_enable: false
+      },
+      '9gH5fD': { // รับข่าวสาร
+        link: 'https://tinyurl.com/3e6eteye',
+        is_enable: false
+      },
+      'aK9pX2': { // ติดต่อทีมงาน
+        link: 'https://tinyurl.com/v26k6f49',
+        is_enable: true
+      },
       // 'thG7fbSThS'
       // '99Yo1pFKZx'
       // 'AsdsHiEhfg'
@@ -33,6 +48,8 @@ class IndexController {
     }
 
     // console.log(requestUrl)
+
+    let data = {}
 
     if (_.has(redirectUrl, requestUrl)) {
       const clientData = await this.getClientData(request)
@@ -46,9 +63,15 @@ class IndexController {
         data: { clientData },
       }
       LogRepository.fire(dataLogs)
-      const url = _.get(redirectUrl, requestUrl)
+      data = _.get(redirectUrl, `${requestUrl}`)
+      const url = data.link
+      const isEnable = data.is_enable
 
-      return response.status(301).redirect(url)
+      if (isEnable) {
+        return response.status(301).redirect(url)
+      }
+
+
     }
 
     if (_.eq(requestUrl, '4SXfET8E9o')) {
@@ -64,7 +87,7 @@ class IndexController {
       LogRepository.fire(dataLogs)
     }
 
-    return view.render('cutt.landing')
+    return view.render('cutt.landing', data)
   }
 
   async getClientData (request) {
