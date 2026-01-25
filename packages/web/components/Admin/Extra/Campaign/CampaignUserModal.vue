@@ -321,7 +321,7 @@ export default {
         id: this._.get(this.user, 'campaign_id'),
         user_id: this._.get(this.user, 'id'),
         mobile: this.user.mobile,
-        message: `${name} สามารถติดต่อย้ายข้อมูลไปยังระบบใหม่พร้อมรับโปรโมชั่นได้ที่ ไลน์ไอดี : @onelotter`
+        message: `${name} สามารถติดต่อย้ายข้อมูลไปยังระบบใหม่พร้อมรับโปรโมชั่นได้ที่ ไลน์ไอดี : @one.th`
       }
 
       // console.log(input)
