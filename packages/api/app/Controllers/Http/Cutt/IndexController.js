@@ -25,15 +25,15 @@ class IndexController {
     const redirectUrl = {
       '7rB3tW': { // ย้ายระบบ
         link: 'https://tinyurl.com/464hwrhf',
-        is_enable: false
+        is_enable: true
       },
       'Nc4vJ0': { // ระบบใหม่
         link: 'https://tinyurl.com/5n8jr4j3',
-        is_enable: false
+        is_enable: true
       },
       '9gH5fD': { // รับข่าวสาร
         link: 'https://tinyurl.com/3e6eteye',
-        is_enable: false
+        is_enable: true
       },
       'aK9pX2': { // ติดต่อทีมงาน
         link: 'https://tinyurl.com/v26k6f51',
