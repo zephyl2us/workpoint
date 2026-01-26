@@ -169,7 +169,7 @@ class CampaignController {
 		if (actor === 'me') {
 			query.where('actor_user_id', actorId)
 			// _.set(userFilter, 'actor_user_id', actorId)
-		} else if (hasPermission) {
+		} else if (!hasPermission) {
 			// console.log(`hasPermission`, hasPermission)
 			query.where(function () {
 				this.where('actor_user_id', null)
