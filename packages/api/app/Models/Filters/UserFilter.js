@@ -16,7 +16,7 @@ class UserFilter extends ModelFilter {
   }
 
   ids (value) {
-    return this.where('id', value)
+    return this.whereIn('id', value)
   }
 
   group (value) {
