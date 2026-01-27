@@ -348,6 +348,11 @@ class CampaignController {
 		const authUser = auth.user
 		const actorId = authUser.id
 
+      return response.status(400).json({
+        code: 'campaign.cannot_send_sms',
+        message: `Cannot send SMS in the moment`
+      })
+
 		// const mobile = request.input('mobile')
 		// const message = request.input('message')
     // console.log(props)
