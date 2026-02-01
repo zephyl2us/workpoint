@@ -40,6 +40,17 @@ export default {
     },
   },
   mutations: {
+		clearLotteries (state) {
+			state.lotteries = []
+		},
+		clearCategories (state) {
+			state.categories = []
+		},
+		clearAll (state) {
+			state.categories = []
+			state.lotteries = []
+			state.zoneRates = {}
+		},
 		changeZoneRate (state, payload) {
 			const { key, value } = payload
 			const rates = _.cloneDeep(state.zoneRates)
@@ -71,10 +82,43 @@ export default {
       state.categories = categories
 		},
     receiveLotteries (state, payload) {
-			const { records:lotteries } = payload
+			// รองรับทั้ง format เก่า { records: [...] } และ format ใหม่ { categories: [...], lotteries: [...] }
+			const { records, lotteries, categories } = payload
+			
+			const hasLotteryData = !!(lotteries || records)
+
+			// อัปเดต categories:
+			// - ถ้ามี lotteries/records (หน้า lottery) → merge แบบฉลาด (อัปเดตเฉพาะ categories ที่มาใหม่)
+			// - ถ้าไม่มี lotteries/records → ไม่ต้องทำอะไร (ให้ใช้ receiveCategories แทน)
+			if (categories && categories.length > 0 && hasLotteryData) {
+				const existingCategories = _.cloneDeep(state.categories)
+				
+				// Loop categories ที่ได้มาใหม่
+				categories.forEach(newCategory => {
+					const existingIndex = _.findIndex(existingCategories, { id: newCategory.id })
+					if (existingIndex !== -1) {
+						// อัปเดต category ที่มีอยู่แล้ว
+						existingCategories[existingIndex] = _.assign(existingCategories[existingIndex], newCategory)
+					} else {
+						// เพิ่ม category ใหม่
+						existingCategories.push(newCategory)
+					}
+				})
+				
+				state.categories = existingCategories
+			}
+
+			// อัปเดต lotteries: ต้อง clear เสมอเพื่อไม่ให้ข้อมูลเก่าค้างอยู่
+			if (lotteries) {
+				state.lotteries = lotteries
+			} else if (records) {
+				state.lotteries = records
+			} else {
+				// ถ้าไม่มีข้อมูลมา ให้ clear เป็น empty array
+				state.lotteries = []
+			}
 
       // console.log(lotteries)
-      state.lotteries = lotteries
     },
     receiveUpdateLottery (state, payload) {
       const { id } = payload
@@ -172,20 +216,45 @@ export default {
 		/**
 		 * Get Lottery Yeekee by Slug
 		 */
-		async getYeekeeBySlug ({ commit }, data) {
-			const zone = data.zone
-			const slug = data.slug
-			const params = $.param(data.params)
-			try {
-				const response = await this.$axios.get(`/core/lottery/yeekee/${zone}/${slug}?${params}`)
-				commit('receiveLotteries', response.data)
-			} catch (e){
-				console.error('CANNOT FETCH')
-			}
-		},
-		/**
-		 * Get Lottery Zone Rate
-		 */
+	async getYeekeeBySlug ({ commit }, data) {
+		const zone = data.zone
+		const slug = data.slug
+		const params = $.param(data.params)
+		try {
+			const response = await this.$axios.get(`/core/lottery/yeekee/${zone}/${slug}?${params}`)
+			commit('receiveLotteries', response.data)
+		} catch (e){
+			console.error('CANNOT FETCH')
+		}
+	},
+	/**
+	 * Get Lottery Crypto
+	 */
+	async getCrypto ({ commit }, data) {
+		const params = $.param(data.params)
+		try {
+			const response = await this.$axios.get(`/core/lottery/crypto?${params}`)
+			commit('receiveLotteries', response.data)
+		} catch (e){
+			console.error('CANNOT FETCH')
+		}
+	},
+	/**
+	 * Get Lottery Crypto by Slug
+	 */
+	async getCryptoBySlug ({ commit }, data) {
+		const slug = data.slug
+		const params = $.param(data.params)
+		try {
+			const response = await this.$axios.get(`/core/lottery/crypto/${slug}?${params}`)
+			commit('receiveLotteries', response.data)
+		} catch (e){
+			console.error('CANNOT FETCH')
+		}
+	},
+	/**
+	 * Get Lottery Zone Rate
+	 */
 		async getZoneRate ({ commit }, zone) {
 			// const zone = data.zone
 			try {

@@ -123,7 +123,7 @@ export default {
     return {
       showConfigModal: false,
       configCategory: null,
-      types: ['government', 'stock', 'yeekee']
+      types: ['government', 'stock', 'yeekee', 'crypto']
     }
   },
   computed: {
@@ -136,6 +136,11 @@ export default {
 	beforeDestroy () {
   },
   created () {},
+  activated () {
+    // เมื่อหน้านี้ active (กลับมาจากหน้าอื่น)
+    // ตรวจสอบว่า categories ครบทุก type หรือไม่
+    this.checkAndReloadCategories()
+  },
   mounted () {
     this.getCategories()
   },
@@ -143,6 +148,19 @@ export default {
     ...mapActions('admin-lottery', [
       'getCategories'
     ]),
+    checkAndReloadCategories () {
+      // ตรวจสอบว่ามี categories ครบทุก type หรือไม่
+      const requiredTypes = ['government', 'stock', 'yeekee', 'crypto']
+      const hasAllTypes = requiredTypes.every(type => {
+        return this.categories.some(cat => cat.type === type)
+      })
+      
+      // ถ้าไม่ครบ ให้โหลดใหม่
+      if (!hasAllTypes) {
+        console.log('🔄 [Setting] Categories incomplete, reloading...')
+        this.getCategories()
+      }
+    },
     getZones (type) {
       const categories = this._.cloneDeep(this.categories)
       const zoneCategories = this._.filter(categories, (category) => this._.eq(type, category.type))

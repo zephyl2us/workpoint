@@ -78,7 +78,7 @@ class LotteryStartRepository {
       }
     }
 
-    if(_.eq('yeekee', type)) {
+    if(_.includes(['yeekee', 'crypto'], type)) {
       const totalRound = _.get(category, 'total_round')
       const date = moment().subtract(5, 'hours').format('YYYY-MM-DD')
 
@@ -94,7 +94,7 @@ class LotteryStartRepository {
 
       // if(_.size(lotteries) < totalRound) {
       if(_.size(lotteries) < 1) {
-        // console.log('Create Yeekee')
+        // console.log('Create Yeekee/Crypto')
         this.create(category)
         return
       }
@@ -134,6 +134,7 @@ class LotteryStartRepository {
 
     switch (type) {
       case 'yeekee':
+      case 'crypto':
         const totalRound = parseInt(_.get(category, 'total_round')) || 0
         const firstRoundEndAt = moment(startAt).add(1, 'hour')
         const diffTime = Math.abs(firstRoundEndAt.diff(endAt)) / 1000

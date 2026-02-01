@@ -7,7 +7,8 @@ export default {
   type: {
     government: 'หวยรัฐบาล',
     stock: 'หวยหุ้น',
-    yeekee: 'หวยยี่กี'
+    yeekee: 'หวยยี่กี',
+    crypto: 'หวยคริปโต'
   },
   category: {
     status: {
@@ -88,7 +89,18 @@ export default {
     taweechoke:         'ทวีโชค',
     lotto432:           'LOTTO432',
     worldlotto:         'World Lotto',
-    chudjen:            'Chudjen'
+    chudjen:            'Chudjen',
+
+    // Crypto zones
+    btc:                'Bitcoin',
+    eth:                'Ethereum',
+    ada:                'Cardano',
+    sol:                'Solana',
+    dot:                'Polkadot',
+    avax:               'Avalanche',
+    bnb:                'Binance Coin',
+    xrp:                'Ripple',
+    trx:                'Tron',
   },
   slug: {
     glo:								'หวยรัฐบาล',
@@ -200,6 +212,17 @@ export default {
     chudjen_5min:		          'หวยยี่กี Chudjen 5 นาที',
     chudjen_yeekee_vip:       'หวยยี่กี Chudjen VIP',
     chudjen_5min_vip:	        'หวยยี่กี Chudjen VIP 5 นาที',
+
+    // Crypto slugs
+    btc_5min:                 'Bitcoin 5 นาที',
+    eth_5min:                 'Ethereum 5 นาที',
+    ada_5min:                 'Cardano 5 นาที',
+    sol_5min:                 'Solana 5 นาที',
+    dot_5min:                 'Polkadot 5 นาที',
+    avax_5min:                'Avalanche 5 นาที',
+    bnb_5min:                 'Binance Coin 5 นาที',
+    xrp_5min:                 'Ripple 5 นาที',
+    trx_5min:                 'Tron 5 นาที',
   },
   short_slug: {
     _yeekee: 'ยี่กี',

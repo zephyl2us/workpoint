@@ -1580,3 +1580,122 @@ $fi-size-xl: 1.5em;
 .fi-un.fi-squared {
   background-image: url('#{$fi-path}/1x1/un.svg');
 }
+
+// Crypto Icons (using emoji/text instead of flags)
+.fi-btc {
+  background-image: none;
+  background: linear-gradient(135deg, #f7931a 0%, #f7931a 100%);
+  &::before {
+    content: "₿";
+    color: white;
+    font-weight: bold;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.fi-eth {
+  background-image: none;
+  background: linear-gradient(135deg, #627eea 0%, #627eea 100%);
+  &::before {
+    content: "Ξ";
+    color: white;
+    font-weight: bold;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.fi-ada {
+  background-image: none;
+  background: linear-gradient(135deg, #0033ad 0%, #0033ad 100%);
+  &::before {
+    content: "₳";
+    color: white;
+    font-weight: bold;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.fi-sol {
+  background-image: none;
+  background: linear-gradient(135deg, #14f195 0%, #9945ff 100%);
+  &::before {
+    content: "◎";
+    color: white;
+    font-weight: bold;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.fi-dot {
+  background-image: none;
+  background: linear-gradient(135deg, #e6007a 0%, #e6007a 100%);
+  &::before {
+    content: "●";
+    color: white;
+    font-weight: bold;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.fi-avax {
+  background-image: none;
+  background: linear-gradient(135deg, #e84142 0%, #e84142 100%);
+  &::before {
+    content: "▲";
+    color: white;
+    font-weight: bold;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.fi-bnb {
+  background-image: none;
+  background: linear-gradient(135deg, #f3ba2f 0%, #f3ba2f 100%);
+  &::before {
+    content: "⬥";
+    color: white;
+    font-weight: bold;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.fi-xrp {
+  background-image: none;
+  background: linear-gradient(135deg, #23292f 0%, #23292f 100%);
+  &::before {
+    content: "✕";
+    color: white;
+    font-weight: bold;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.fi-trx {
+  background-image: none;
+  background: linear-gradient(135deg, #eb0029 0%, #eb0029 100%);
+  &::before {
+    content: "Ͳ";
+    color: white;
+    font-weight: bold;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

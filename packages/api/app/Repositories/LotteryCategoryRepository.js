@@ -80,9 +80,9 @@ class LotteryCategoryRepository {
     return false
   }
 
-  async getEnableZones (zones) {
+  async getEnableZones (zones, type = 'yeekee') {
     const filter = {
-      type: 'yeekee',
+      type: type,
       zones: zones,
       is_enable: true
     }

@@ -81,6 +81,41 @@ class LotteryController {
     }
   }
 
+  async crypto ({request, params, response}) {
+    const date = request.input('date') || moment().subtract(5, 'hours').format('YYYY-MM-DD')
+    
+    let categories = await this.LotteryCategoryRepository.browse({ filter: { type: 'crypto' } }).fetch()
+    categories = categories.toJSON()
+    
+    const lotteries = await this.LotteryRepository.getYeekeeByDate(date, { 
+      type: 'crypto',
+      result_count: 1 
+    })
+    
+    return {
+      categories: categories,
+      lotteries: lotteries
+    }
+  }
+
+  async cryptoSlug ({request, params, response}) {
+    const slug = params.slug
+    const date = request.input('date') || moment().subtract(5, 'hours').format('YYYY-MM-DD')
+    
+    let categories = await this.LotteryCategoryRepository.browse({ filter: { type: 'crypto', slug: slug } }).fetch()
+    categories = categories.toJSON()
+    
+    const lotteries = await this.LotteryRepository.getYeekeeByDate(date, { 
+      type: 'crypto',
+      slug: slug 
+    })
+    
+    return {
+      categories: categories,
+      lotteries: lotteries
+    }
+  }
+
   async zoneRate ({request, params, response}) {
     // console.log(params)
     const zone = params.zone

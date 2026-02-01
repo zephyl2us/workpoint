@@ -262,10 +262,12 @@ class LotteryRepository {
 
   // }
   
-  async getYeekeeByDate(date, options = { zone: null, slug: null, has_result: null, result_count: null }) {
+  async getYeekeeByDate(date, options = { zone: null, slug: null, has_result: null, result_count: null, type: null }) {
+
+    const type = _.get(options, 'type') || 'yeekee'
 
     const categoryFilter = {
-      type: 'yeekee'
+      type: type
     }
 
     if(_.result(options, 'slug')) {
@@ -289,12 +291,12 @@ class LotteryRepository {
     const hasResult = _.get(options, 'has_result')
     if(resultCount) {
       const categoryIdString = _.join(categoryIds, ',')
-      lotteries = await Database.raw(`select lottery.* from (select * , Row_Number() over (partition by lottery_category_id order by round desc) as rw from lotteries where date = '${date}' and type = 'yeekee' and status = 'finished' and \`lottery_category_id\` in (${categoryIdString})) lottery where lottery.rw <= '${resultCount}'`)
+      lotteries = await Database.raw(`select lottery.* from (select * , Row_Number() over (partition by lottery_category_id order by round desc) as rw from lotteries where date = '${date}' and type = '${type}' and status = 'finished' and \`lottery_category_id\` in (${categoryIdString})) lottery where lottery.rw <= '${resultCount}'`)
       lotteries = _.get(lotteries, '0')
     } else {
       const filter = {
         date: date,
-        type: 'yeekee'
+        type: type
       }
 
       if(hasResult) {

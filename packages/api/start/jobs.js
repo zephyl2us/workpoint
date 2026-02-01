@@ -8,6 +8,7 @@ module.exports = [
   'App/Jobs/LotteryAuthDaily',
   'App/Jobs/LotteryStockResult',
   'App/Jobs/LotteryYeekeeResult',
+  'App/Jobs/LotteryCryptoResult',
   // 'App/Jobs/LotteryYeekeeResultExtra',
   'App/Jobs/MovieTmdbCompany',
   'App/Jobs/MovieTmdbCollection',

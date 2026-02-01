@@ -44,6 +44,10 @@ module.exports = {
         view: 0,
         lottery_rate: 0,
       },
+      crypto: {
+        view: 0,
+        lottery_rate: 0,
+      },
     },
     army: {
       ant: {

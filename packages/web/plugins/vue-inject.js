@@ -154,14 +154,27 @@ Vue.mixin({
 				choke77:            '',
 				ruaychoke:          '',
 				huay9898:           '',
-				haichoke:           '',
-				jakchoke:           '',
-				taweechoke:         '',
-				lotto432:           '',
-			}
+			haichoke:           '',
+			jakchoke:           '',
+			taweechoke:         '',
+			lotto432:           '',
+			worldlotto:         '',
+			chudjen:            '',
+			
+		// Crypto zones
+		btc:                'btc',
+		eth:                'eth',
+		ada:                'ada',
+		sol:                'sol',
+		dot:                'dot',
+		avax:               'avax',
+		bnb:                'bnb',
+		xrp:                'xrp',
+		trx:                'trx',
+	}
 
-			return this._.get(flags, zone)
-		},
+		return this._.get(flags, zone)
+	},
 
     addFlagIconClass (category) {
 			const type = this._.get(category, 'type')

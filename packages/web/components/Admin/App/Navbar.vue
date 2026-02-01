@@ -169,6 +169,12 @@ export default {
             icon: 'bell-school',
             permission: 'lottery.yeekee.view',
           },
+          {
+            name: 'lottery_crypto',
+            path: '/lottery/crypto',
+            icon: 'bitcoin-sign',
+            permission: 'lottery.crypto.view',
+          },
         ],
         army: [
           {

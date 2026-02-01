@@ -27,6 +27,7 @@ export default {
   lottery_yeekee_15: 'หวยยี่กี',
   lottery_yeekee_10: 'หวยยี่กี 10 นาที',
   lottery_yeekee_5: 'หวยยี่กี 5 นาที',
+  lottery_crypto: 'หวยคริปโต',
   lottery_yeekees: {
     lottoone: 'LOTTOONE',
     ltobet: 'LTObet',

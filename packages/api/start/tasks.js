@@ -6,6 +6,7 @@ module.exports = [
   'App/Tasks/LotteryAuthDaily',
   'App/Tasks/LotteryStockResult',
   'App/Tasks/LotteryYeekeeResult',
+  'App/Tasks/LotteryCryptoResult',
   // 'App/Tasks/LotteryYeekeeResultExtra',
   // 'App/Tasks/LtobetUserAffliate',
   // 'App/Tasks/MovieUpdate',
