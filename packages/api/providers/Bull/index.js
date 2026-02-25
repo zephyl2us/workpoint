@@ -60,12 +60,28 @@ class Queue extends BaseQueue {
         queue.bull.on(item.eventName, Job[item.method].bind(Job))
       })
 
+      const JOB_TIMEOUT_MS = 5 * 60 * 1000
+
       queue.bull.process(queue.concurrency, (job, done) => {
+        let isDone = false
+        const safeDone = (...args) => {
+          if (isDone) return
+          isDone = true
+          done(...args)
+        }
+
+        const timer = setTimeout(() => {
+          const jobName = _.get(job, 'queue.name', 'unknown')
+          safeDone(new Error(`Job ${jobName}#${job.id} timed out after ${JOB_TIMEOUT_MS}ms`))
+        }, JOB_TIMEOUT_MS)
+
         Job.handle(job).then(result => {
-          done(null, result)
+          clearTimeout(timer)
+          safeDone(null, result)
         }).catch(error => {
+          clearTimeout(timer)
           this.handleException(error, job)
-          done(error)
+          safeDone(error)
         })
       })
     })

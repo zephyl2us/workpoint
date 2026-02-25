@@ -483,7 +483,8 @@ Helper.request = async (url, options) => {
 			authorization: `Bearer ${Env.get('MOVIE_TMDB_API_KEY')}`
 		},
 		qs: {},
-		json:true
+		json:true,
+		timeout: 30000
 	}, options)
 
 	const result = await rp(requestOptions)

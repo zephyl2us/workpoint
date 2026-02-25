@@ -22,8 +22,10 @@ class LotteryResultRequestRepository {
     if(privateProxy) {
       options.proxy = privateProxy
     }
-		
-    // console.log(options)
+
+    if (!options.timeout) {
+      options.timeout = 30000
+    }
 
     const result = await rp(options)
     .then(function (response) {
@@ -32,8 +34,6 @@ class LotteryResultRequestRepository {
     .catch(function (error) {
       return error
     })
-    
-    // console.log(result)
 
     return result
 	}

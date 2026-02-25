@@ -59,7 +59,6 @@ class BrowserRepository {
       args: launchArgs
     })
 
-    // console.log(url, this.launchArgs())
 		const page = await browser.newPage();
 
     try {
@@ -75,7 +74,6 @@ class BrowserRepository {
         waitUntil: _.get(options, 'wait_until', 'load'),
         timeout: 10000
       })
-
 
       const callbackAt = moment().unix()
       const result = await callback(page)
@@ -101,17 +99,16 @@ class BrowserRepository {
 				message: e.message,
 				data: e,
         url: url
-				// params: data
 			}
 			LogRepository.fire(dataLogs)
     } finally {
 			if (page) {
-				await page.close();
+				await page.close().catch(() => {});
         await new Promise(r => setTimeout(r, this.closeBrowserDelay))
 			}
 
       if (browser) {
-        await browser.close()
+        await browser.close().catch(() => {});
         await new Promise(r => setTimeout(r, this.closeBrowserDelay))
       }
     }
@@ -129,21 +126,25 @@ class BrowserRepository {
       options.proxy = proxyUrl
     }
 
-    const result = await rp(options)
-    .then(function (response) {
-      return response
-    })
-    .catch(function (error) {
-      return error
-    })
+    if (!options.timeout) {
+      options.timeout = 30000
+    }
 
-		// console.log(result)
+    try {
+      const result = await rp(options)
+      .then(function (response) {
+        return response
+      })
+      .catch(function (error) {
+        return error
+      })
 
-		if (proxyUrl) {
-			await proxyChain.closeAnonymizedProxy(proxyUrl, true)
-		}
-		
-    return result
+      return result
+    } finally {
+      if (proxyUrl) {
+        await proxyChain.closeAnonymizedProxy(proxyUrl, true).catch(() => {})
+      }
+    }
 	}
 
 }
