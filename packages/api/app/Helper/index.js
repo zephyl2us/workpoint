@@ -141,7 +141,8 @@ Helper.privateProxy = () => {
 		}
 	})
 
-	const proxy = _.size(proxies) ? _.sample(proxies) : false
+	// const proxy = _.size(proxies) ? _.sample(proxies) : false
+	const proxy = false
 
 	return proxy
 }
